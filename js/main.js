@@ -34,27 +34,27 @@ function Add()
 		
 		AddedBlock = true;
 	}
-	else if(CurrentBlock == "TurnRotations" && document.getElementById("TurnRotationsMotor").value != "" && document.getElementById("TurnRotationsPort").value != "" && document.getElementById("TurnRotationsNumber").value != "" && document.getElementById("TurnRotationsSpeed").value != "")
+	else if(CurrentBlock == "TurnRotations" && document.getElementById("TurnRotationsDaisyChain").value != "" && document.getElementById("TurnRotationsMotor").value != "" && document.getElementById("TurnRotationsPort").value != "" && document.getElementById("TurnRotationsNumber").value != "" && document.getElementById("TurnRotationsSpeed").value != "")
 	{
-		var Encoder = "(getEncoderPosition(" + document.getElementById("TurnRotationsMotor").value + ", S" + document.getElementById("TurnRotationsPort").value + ")";
-		var AmountToAdd =  " + " + document.getElementById("TurnRotationsNumber").value * 1440 + "" + ")";
-		ReturnCode[ReturnCode.length] = "setEncoderPosition(" + document.getElementById("TurnRotationsMotor").value + ", S" + document.getElementById("TurnRotationsPort").value + ", " + Encoder + AmountToAdd + ");\n"; 
+		var Encoder = "(I2C_GetEncoderPosition(S" + document.getElementById("TurnRotationsPort").value + ", " +  document.getElementById("TurnRotationsDaisyChain").value + ", " + document.getElementById("TurnRotationsMotor").value + ")";
+		var AmountToAdd =  document.getElementById("TurnRotationsNumber").value * 1440 + "" + ")";
+		ReturnCode[ReturnCode.length] = "Motors_SetPosition(S" + document.getElementById("TurnRotationsPort").value + ", " + document.getElementById("TurnRotationsDaisyChain").value + ", " + document.getElementById("TurnRotationsMotor").value + ", "  + Encoder + " + " + AmountToAdd + ", " + document.getElementById("TurnRotationsSpeed").value + ");\n"; 
 	
 				
 		Context.fillStyle = "Brown";
 		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
 		Context.fillStyle = "Black";
-		Context.fillText("Turn for " + document.getElementById("TurnRotationsNumber").value + " rotations on port " + document.getElementById("TurnRotationsPort").value + " motor " + document.getElementById("TurnRotationsMotor").value + ".", 10, 25 + BlocksAdded * 55);
+		Context.fillText("Turn for " + document.getElementById("TurnRotationsNumber").value + " rotations on port " + document.getElementById("TurnRotationsPort").value + ", daisy chain level " + document.getElementById("TurnRotationsDaisyChain").value + ", motor " + document.getElementById("TurnRotationsMotor").value + ".", 10, 25 + BlocksAdded * 55);
 		AddedBlock = true;
 	}	
-	else if(CurrentBlock == "MoveSpeed" && document.getElementById("MoveSpeedSpeed").value != "" && document.getElementById("MoveSpeedPort").value != "" && document.getElementById("MoveSpeedMotor").value != "")
+	else if(CurrentBlock == "MoveSpeed" && document.getElementById("MoveSpeedSpeed").value != "" && document.getElementById("MoveSpeedPort").value != "" && document.getElementById("MoveSpeedMotor").value != "" && document.getElementById("MoveDaisyChain").value != "")
 	{
-		ReturnCode[ReturnCode.length] = "setMotorSpeed(" + document.getElementById("MoveSpeedSpeed").value + ", S"  + document.getElementById("MoveSpeedPort").value + ", " + document.getElementById("MoveSpeedMotor").value + ");\n";
+		ReturnCode[ReturnCode.length] = "Motors_SetSpeed(S"  + document.getElementById("MoveSpeedPort").value + ", " + document.getElementById("MoveDaisyChain").value + ", " + document.getElementById("MoveSpeedMotor").value + ", " + document.getElementById("MoveSpeedSpeed").value + ");\n";
 	
 		Context.fillStyle = "Green";
 		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
 		Context.fillStyle = "Black";
-		Context.fillText("Move port " + document.getElementById("MoveSpeedPort").value + " motor " + document.getElementById("MoveSpeedMotor").value + " at " + document.getElementById("MoveSpeedSpeed").value + " percent speed.", 10, 25 + BlocksAdded * 55);
+		Context.fillText("Move port " + document.getElementById("MoveSpeedPort").value + ", daisy chain level " + document.getElementById("MoveDaisyChain").value + ", motor " + document.getElementById("MoveSpeedMotor").value + " at " + document.getElementById("MoveSpeedSpeed").value + " percent speed.", 10, 25 + BlocksAdded * 55);
 		AddedBlock = true;
 	}
 	else
@@ -90,8 +90,10 @@ function ResetTextBoxes()
 	document.getElementById("TurnRotationsNumber").value = "";
 	document.getElementById("MoveSpeedSpeed").value = "";
 	document.getElementById("MoveSpeedPort").value = "";
+	document.getElementById("MoveDaisyChain").value = "";
 	document.getElementById("MoveSpeedMotor").value = "";
 	document.getElementById("TurnRotationsSpeed").value = "";
+	document.getElementById("TurnRotationsDaisyChain").value = "";
 }
 
 function Sleep()
