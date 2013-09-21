@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>RobotC Precompiler</title>
+		<link rel="stylesheet" href="bootstrap.css">
+		<link rel="stylesheet" href="bootstrap-responsive.css">
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" type="text/css" href="extension.css"></head>
+	
+	
+	<body onload="Initialize();">
+	
+	<!-- Modal -->
+	<div id="Modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<h2 id="myModalLabel">Help Menu</h2>
+		</div>
+		
+		<div class="modal-body">
+			<h4>New Projects</h4>
+			<p>To create a new project, press the New Project button underneath the website title.</p>
+			<h4>Adding blocks</h4>
+			<p>EasyC uses code blocks to simulate how real RobotC works. To add a
+ block, navigate to the heading titled 'This is where you will add 
+blocks.'. First, select the block type. You can choose to Sleep for a 
+few seconds, turn a motor a certain number of rotations, or move a motor
+ at a certain speed. Once you have selected the correct block type, fill
+ in the text boxes below it, putting in the values listed in the boxes. 
+To add your text box, just press add, and it will automatically be drawn
+ to the right so you can see how your program looks so far.</p>
+			<h4>Converting to RobotC</h4>
+			<p>Converting EasyC to RobotC is quite simple. Once you like the 
+looks of your program, just copy all the code in the text box under the 
+heading 'This is where your output text will be.', and paste it into 
+RobotC. Set up the communication with the Nxt brick like you suually 
+would, and run the code. It will work as if it were normal RobotC code.</p>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
+	</div>
+	
+	<div class="row span12 hero-unit">
+		<h1>Welcome to EasyC,</h1>
+		<h4>A project to make writing code for RobotC as easy as breathing.</h4>
+		<div class="btn-group">
+			<button class="btn btn-large" onclick="RefreshPage();">New Project</button>
+			<button class="btn btn-large" href="mailto:izinda@hotmail.com?Subject=EasyC">Contact Isaac</button>
+			<button class="btn btn-large" onclick="ShowModal();">Help</button>
+		</div>
+	</div>
+		<div class="row">
+			<div class="span4">
+				<h5>This is where you will see your program.</h5>
+				<canvas id="canvas" height="1000" width="310">Canvas not supported</canvas>
+			</div>
+			<div class="span4">
+				<h5>This is where you will add blocks.</h5>
+				<select>
+					<option selected="selected" onclick="Sleep();">Sleep</option>
+					<option onclick="TurnRotations();">TurnRotations</option>
+					<option onclick="MoveSpeed();">MoveSpeed</option>
+				</select>
+				
+				<div style="display: block;" id="Sleep">
+					<input id="SleepSeconds" placeholder="Seconds to sleep" type="text">
+				</div>
+				
+				<div style="display: none;" id="TurnRotations">
+					<input id="TurnRotationsSpeed" placeholder="Speed to turn at" type="text">
+					<input id="TurnRotationsNumber" placeholder="Number of rotations to turn" type="text">
+					<input id="TurnRotationsPort" placeholder="Motor port" type="text">
+					<input id="TurnRotationsMotor" placeholder="Motor number" type="text">
+				</div>
+				
+				<div style="display: none;" id="MoveSpeed">
+					<input id="MoveSpeedSpeed" placeholder="Speed to move at" type="text">
+					<input id="MoveSpeedPort" placeholder="Motor port" type="text">
+					<input id="MoveSpeedMotor" placeholder="Motor number" type="text">
+				</div>
+				
+				<button class="btn" onclick="Add();">Add</button>
+			
+			</div>
+			<div class="span4">
+				<h5>This is where your output text will be.</h5>
+				<textarea id="TextArea" rows="20"></textarea>
+			</div>
+		</div>
+		
+		<p id="LibrariesText" hidden="True">
+typedef ubyte tByteArray[17];
+
+void writeI2C(tSensors link, tByteArray &amp;request)
+{
+	sendI2CMsg(link, &amp;request[0], 0);
+}
+
+void writeI2C(tSensors link, tByteArray &amp;request, tByteArray 
+&amp;reply, int replylen)
+{
+	sendI2CMsg(link, &amp;request[0], replylen);
+	readI2CReply(link, &amp;reply[0], replylen);
+}
+
+void setMotorSpeed(sbyte Speed, tSensors port, int MotorNumber)
+{
+	tByteArray I2Crequest;
+	I2Crequest[0] = 3;
+	I2Crequest[1] = 0x2;
+	if(MotorNumber == 1)
+	{
+		I2Crequest[2] = 0x45;
+	}
+	else
+	{
+		I2Crequest[2] = 0x46;
+	}
+	I2Crequest[3] = Speed;
+	writeI2C(port, I2Crequest);
+}
+
+long getEncoderPosition(int motor, tSensors port, int daisychainLevel = 
+0)
+{
+		tByteArray I2Crequest;
+		tByteArray I2Cresponse;
+		I2Crequest[0] = 2;
+	  I2Crequest[1] = 0x02 + daisychainLevel*2;
+	  if (motor == 1)
+	  {
+	  	I2Crequest[2] = 0x49;
+		} else {
+		  I2Crequest[2] = 0x50;
+		}
+	  writeI2C(port, I2Crequest, I2Cresponse, 4);
+	  long EncoderValue = (I2Cresponse[0] &lt;&lt; 24) + (I2Cresponse[1] 
+&lt;&lt; 16) + (I2Cresponse[2] &lt;&lt; 8) + (I2Cresponse[3] &lt;&lt; 
+0);
+  	return EncoderValue;
+}
+
+void setEncoderPosition(int motor, tSensors port, long Input)
+{
+	int daisychainLevel = 1;
+	tByteArray I2Crequest;
+	I2Crequest[0] = 8;
+  I2Crequest[1] = 0x02 + daisychainLevel*2;
+  if (motor == 1)
+  {
+  	I2Crequest[2] = 0x45;
+	} else {
+  	I2Crequest[2] = 0x46;
+  }
+  I2Crequest[3] = 0b00010000;
+  I2Crequest[4] = 0b00000010;
+  I2Crequest[5] = (byte)((Input &gt;&gt; 24) &amp; 0x000000ff);
+  I2Crequest[6] = (byte)((Input &gt;&gt; 16) &amp; 0x000000ff);
+  I2Crequest[7] = (byte)((Input &gt;&gt; 8) &amp; 0x000000ff);
+  I2Crequest[8] = (byte)(Input &amp; 0x000000ff);
+  writeI2C(S1, I2Crequest);
+}
+</p>
+	
+	
+	<script src="RobotC%20Precompiler_files/jquery.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
+	<script src="RobotC%20Precompiler_files/bootstrap.js"></script>
+	<script src="RobotC%20Precompiler_files/main.js"></script>
+
+<div id="annotary-scripts-loaded" style="display:none;"></div></body></html>
