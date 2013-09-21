@@ -18,6 +18,17 @@ function Initialize()
 	Context.fillStyle = "Black";
 	Context.fillRect(0, 0, Canvas.width, Canvas.height);
 	Sleep();
+	// download the libraries
+	var library_base_url = "https://raw.github.com/saasrobotics/Robotics2013-14/master/Libraries/";
+	var libraryRequests = {};
+	var libraryRequests.common = new XMLHttpRequesst();
+	libraryReqests.common.open("get", library_base_url + "Common.h", true);
+	var libraryRequests.I2C = new XMLHttpRequest();
+	libraryRequests.I2C.open("get", library_base_url + "I2C.h", true);
+	var libraryRequests.motors = new XMLHttpRequest();
+	libraryRequests.motors.open("get", library_base_url + "Motors.h", true);
+	var libraryRequests.servos = new XMLHttpRequest();
+	libraryRequests.servos.open("get", library_base_url + "Servos.h", true);
 }
 
 function Add()
