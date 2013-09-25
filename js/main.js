@@ -11,25 +11,42 @@ function RefreshPage()
 	location.reload();
 }
 
-function Initialize()
+function recieveLibrary(name)
 {
+	console.log("received" + name);
+	document.getElementById("LibrariesText").textContent = document.getElementById("LibrariesText").textContent + libraryRequests[name].responseText;
+	//console.log(libraryRequests[name].responseText);
+}
+var libraryRequests = ["common", "I2C", "motors", "servos"];
+window.onready = function()
+{
+	console.log("app init");
 	Canvas = document.getElementById('canvas');
 	Context = Canvas.getContext('2d');
 	Context.fillStyle = "Black";
 	Context.fillRect(0, 0, Canvas.width, Canvas.height);
 	Sleep();
 	// download the libraries
-	var library_base_url = "https://raw.github.com/saasrobotics/Robotics2013-14/master/Libraries/";
-	var libraryRequests = {};
-	var libraryRequests.common = new XMLHttpRequesst();
-	libraryReqests.common.open("get", library_base_url + "Common.h", true);
-	var libraryRequests.I2C = new XMLHttpRequest();
-	libraryRequests.I2C.open("get", library_base_url + "I2C.h", true);
-	var libraryRequests.motors = new XMLHttpRequest();
-	libraryRequests.motors.open("get", library_base_url + "Motors.h", true);
-	var libraryRequests.servos = new XMLHttpRequest();
-	libraryRequests.servos.open("get", library_base_url + "Servos.h", true);
-}
+	// we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain XMLHttpRequest only accepts text/html, text/xml, etc.
+	var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
+	
+	libraryRequests["common"] = new XMLHttpRequest();
+	libraryRequests["common"].onload = function(){recieveLibrary("common")};
+	libraryRequests["common"].open("get", library_base_url + "Common.h", true);
+	libraryRequests["common"].send();
+	libraryRequests["I2C"] = new XMLHttpRequest();
+	libraryRequests["I2C"].onload = function(){recieveLibrary("I2C")};
+	libraryRequests["I2C"].open("get", library_base_url + "I2C.h", true);
+	libraryRequests["I2C"].send();
+	libraryRequests["motors"] = new XMLHttpRequest();
+	libraryRequests["motors"].onload = function(){recieveLibrary("motors")};
+	libraryRequests["motors"].open("get", library_base_url + "Motors.h", true);
+	libraryRequests["motors"].send();
+	libraryRequests["servos"] = new XMLHttpRequest();
+	libraryRequests["servos"].onload = function(){recieveLibrary("servos")};
+	libraryRequests["servos"].open("get", library_base_url + "Servos.h", true);
+	libraryRequests["servos"].send();
+};
 
 function Add()
 {
