@@ -34,24 +34,9 @@ function Initialize()
 function Add()
 {
 	var AddedBlock = false;
-	
-	if(CurrentBlock == "ServoPosition" && document.getElementById("ServoPositionPosition").value != "" && document.getElementById("ServoPositionPort").value != "" && document.getElementById("ServoPositionDaisyChain").value != "" && document.getElementById("ServoPositionMotorNumber").value != "")
+	if(CurrentBlock == "Sleep" && document.getElementById("SleepSeconds").value != "")
 	{
-		ReturnCode[ReturnCode.length] = "Servos_SetPosition(S" + document.getElementById("ServoPositionPort").value + ", " + document.getElementById("ServoPositionDaisyChain").value + ", " + document.getElementById("ServoPositionMotorNumber").value + ", " + document.getElementById("ServoPositionPosition").value + ");\n";
-		
-		Context.fillStyle = "Pink";
-		Context.fillStyle = "Black";
-		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
-		
-		
-		
-		Context.fillText("Servo position " + document.getElementById("ServoPositionPosition").value + ", port S" + document.getElementById("ServoPositionPort").value + ", daisy chain level " + document.getElementById("ServoPositionDaisyChain").value + ", servo " + document.getElementById("ServoPositionMotorNumber").value, 10, 25 + BlocksAdded * 55);
-		
-		AddedBlock = true;
-	}
-	else if(CurrentBlock == "Sleep" && document.getElementById("SleepSeconds").value != "")
-	{
-		ReturnCode[ReturnCode.length] = "Sleep(" + document.getElementById("SleepSeconds").value * 1000 + ");\n";
+		ReturnCode[ReturnCode.length] = "Sleep(" + document.getElementById("SleepSeconds").value + ");\n";
 		
 		Context.fillStyle = "Blue";
 		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
@@ -110,11 +95,6 @@ function Add()
 
 function ResetTextBoxes()
 {
-	document.getElementById("ServoPositionPosition").value = "";
-	document.getElementById("ServoPositionPort").value = "";
-	document.getElementById("ServoPositionDaisyChain").value = "";
-	document.getElementById("ServoPositionMotorNumber").value = "";
-	
 	document.getElementById("SleepSeconds").value = "";
 	document.getElementById("TurnRotationsMotor").value = "";
 	document.getElementById("TurnRotationsPort").value = "";
@@ -132,11 +112,6 @@ function Sleep()
 	ShowElement("Sleep");
 }
 
-function ServoPosition()
-{
-	ShowElement("ServoPosition");
-}
-
 function TurnRotations()
 {
 	ShowElement("TurnRotations");
@@ -152,10 +127,10 @@ function ShowElement(ID)
 	$("#Sleep").hide();
 	$("#TurnRotations").hide();
 	$("#MoveSpeed").hide();
-	$("#ServoPosition").hide();
 	$("#" + ID).show();
 	CurrentBlock = ID;
 }
+
 
 
 

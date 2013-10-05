@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>RobotC Precompiler</title>
 		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 		<link rel="stylesheet" href="css/main.css">
  	</head>
 	
@@ -37,8 +37,8 @@
 		<h4>A project to make writing code for RobotC as easy as breathing.</h4>
 		<div class="btn-group">
 			<button class="btn btn-large" onClick="RefreshPage();">New Project</button>
+			<button class="btn btn-large" href = "mailto:izinda@hotmail.com?Subject=EasyC">Contact Isaac</button>
 			<button class="btn btn-large" data-toggle="modal" data-target="#helpModal">Help</button>
-			<button class="btn btn-large" onclick="window.location = \"http://www.seattleacademy.net/robots">SAAS Robotics Home</button>
 		</div>
 	</div>
 		<div class = "alert alert-info" id = "loadingAlert">Just a sec, I need to load some tools... this shouldn't take too long.</div>
@@ -47,639 +47,627 @@
 				<h5>This is where you will see your program.</h5>
 				<canvas id = 'canvas' height = "1000" width = "310" >Canvas not supported</canvas>
 			</div>
-			<div class = "span5">
+			<div class = "span4">
 				<h5>This is where you will add blocks.</h5>
-				
-				<div class="btn-group">
-					<button class = "btn" onclick = "Sleep();">Sleep</button>
-					<button class = "btn" onclick = "TurnRotations();">Motor Rotations</button>
-					<button class = "btn" onclick = "MoveSpeed();">Motor Speed</button>
-					<button class = "btn" onclick = "ServoPosition();">Move Servo</button>
-				</div>
+				<select>
+					<option onclick = "Sleep();">Sleep</option>
+					<option onclick = "TurnRotations();">TurnRotations</option>
+					<option onclick = "MoveSpeed();">MoveSpeed</option>
+				</select>
 				
 				<div id = "Sleep">
-					<h5>Sleep for Time</h5>
 					<input type="text" id = "SleepSeconds" placeholder="Seconds to sleep">
 				</div>
 				
 				<div id = "TurnRotations">
-					<h5>Turn Motor by Rotations</h5>
-					<input type="text" id = "TurnRotationsPort" placeholder="Port">
+					<input type="text" id = "TurnRotationsPort" placeholder="Motor port">
 					<input type="text" id = "TurnRotationsDaisyChain" placeholder="Daisy Chain Level">
 					<input type="text" id = "TurnRotationsMotor" placeholder="Motor number">
-					<input type="text" id = "TurnRotationsSpeed" placeholder="Speed">
-					<input type="text" id = "TurnRotationsNumber" placeholder="Rotations to turn">
+					<input type="text" id = "TurnRotationsSpeed" placeholder="Speed to turn at">
+					<input type="text" id = "TurnRotationsNumber" placeholder="Number of rotations to turn">
 				</div>
+
 				
 				<div id = "MoveSpeed">
-					<h5>Move Motor by Speed</h5>
-					<input type="text" id = "MoveSpeedPort" placeholder="Port">
+					<input type="text" id = "MoveSpeedSpeed" placeholder="Speed to move at">
+					<input type="text" id = "MoveSpeedPort" placeholder="Motor port">
 					<input type="text" id = "MoveDaisyChain" placeholder="Daisy Chain Level">
 					<input type="text" id = "MoveSpeedMotor" placeholder="Motor number">
-					<input type="text" id = "MoveSpeedSpeed" placeholder="Speed">
-				</div>
-				
-				<div id = "ServoPosition">
-					<h5>Move Servo to Position</h5>
-					<input type="text" id = "ServoPositionPort" placeholder="Port">
-					<input type="text" id = "ServoPositionDaisyChain" placeholder="Daisy Chain Level">
-					<input type="text" id = "ServoPositionMotorNumber" placeholder="Servo number">
-					<input type="text" id = "ServoPositionPosition" placeholder="Target servo position">
 				</div>
 				
 				<button class="btn" onclick = "Add();">Add</button>
 			
 			</div>
-			<div class = "span3">
+			<div class = "span4">
 				<h5>This is where your output text will be.</h5>
 				<textarea id = "TextArea" rows="20"></textarea>
 			</div>
 		</div>
 		
 		<p id = "LibrariesText" hidden = "True">
-			#pragma config(Sensor, S1,     M_CONTROL,      sensorI2CCustom)
-			#pragma config(Sensor, S2,     M_CONTROL,      sensorI2CCustom)
-			#pragma config(Sensor, S3,     M_CONTROL,      sensorI2CCustom)
-			#pragma config(Sensor, S4,     M_CONTROL,      sensorI2CCustom)
+#pragma config(Sensor, S1,     M_CONTROL,      sensorI2CCustom)
+#pragma config(Sensor, S2,     M_CONTROL,      sensorI2CCustom)
+#pragma config(Sensor, S3,     M_CONTROL,      sensorI2CCustom)
+#pragma config(Sensor, S4,     M_CONTROL,      sensorI2CCustom)
 
-			#pragma systemFile
+#pragma systemFile
 
-			#ifndef __COMMON_H__
-			#define __COMMON_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
-			#undef __COMMON_H_DEBUG__
-			//#define __COMMON_H_DEBUG__
+#undef __COMMON_H_DEBUG__
+//#define __COMMON_H_DEBUG__
 
-			/*!< define this as 0 to remove the check  */
-			#ifndef __COMMON_H_SENSOR_CHECK__
-			#define __COMMON_H_SENSOR_CHECK__ 1
-			#else
-			#warn "sensor checking disabled, I hope you know what you are doing!"
-			#endif
+/*!< define this as 0 to remove the check  */
+#ifndef __COMMON_H_SENSOR_CHECK__
+#define __COMMON_H_SENSOR_CHECK__ 1
+#else
+#warn "sensor checking disabled, I hope you know what you are doing!"
+#endif
 
-			#include "firmwareVersion.h"
-			#if (kRobotCVersionNumeric < 351)
-			#error "These drivers are only supported on RobotC version 3.51 or higher"
-			#endif
+#include "firmwareVersion.h"
+#if (kRobotCVersionNumeric < 351)
+#error "These drivers are only supported on RobotC version 3.51 or higher"
+#endif
 
-			#ifndef MAX_ARR_SIZE
-			/**
-			 * Maximum buffer size for byte_array, can be overridden in your own program.
-			 * It's 17 bytes big because the max I2C buffer size is 16, plus 1 byte to denote
-			 * packet length.
-			 */
-			#define MAX_ARR_SIZE 17
-			#endif
-
-
-			/**
-			 * This define returns the smaller of the two numbers
-			 */
-			#define min2(a, b) (a < b ? a : b)
+#ifndef MAX_ARR_SIZE
+/**
+ * Maximum buffer size for byte_array, can be overridden in your own program.
+ * It's 17 bytes big because the max I2C buffer size is 16, plus 1 byte to denote
+ * packet length.
+ */
+#define MAX_ARR_SIZE 17
+#endif
 
 
-			/**
-			 * This define returns the smallest of the three numbers
-			 */
-			#define min3(a, b, c) (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c)
+/**
+ * This define returns the smaller of the two numbers
+ */
+#define min2(a, b) (a < b ? a : b)
 
 
-			/**
-			 * This function returns the bigger of the two numbers
-			 */
-			#define max2(a, b) (a > b ? a : b)
+/**
+ * This define returns the smallest of the three numbers
+ */
+#define min3(a, b, c) (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c)
 
 
-			/**
-			 * This function returns the biggest of the three numbers
-			 */
-			#define max3(a, b, c) (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c)
+/**
+ * This function returns the bigger of the two numbers
+ */
+#define max2(a, b) (a > b ? a : b)
 
 
-			/**
-			 * Returns x if it is between min and max. If outside the range,
-			 * it returns min or max.
-			 */
-			#define clip(a, b, c) min2(c, max2(b, a))
+/**
+ * This function returns the biggest of the three numbers
+ */
+#define max3(a, b, c) (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c)
 
 
-			/**
-			 * Array of bytes as a struct, this is a work around for RobotC's inability to pass an array to
-			 * a function.
-			 */
-			typedef ubyte tByteArray[MAX_ARR_SIZE];
-			typedef sbyte tsByteArray[MAX_ARR_SIZE];
-			typedef ubyte tMassiveArray[128];             /*!< 128 byte array for very large blobs of data */
-			typedef ubyte tHugeByteArray[64];             /*!< 64 byte array for very large blobs of data */
-			typedef ubyte tBigByteArray[32];              /*!< 32 byte array for large blobs of data */
-			typedef ubyte tIPaddr[4];                     /*!< Struct for holding an IP address */
-
-			/**
-			 * Array of ints as a struct, this is a work around for RobotC's inability to pass an array to
-			 * a function.
-			 */
-			typedef int tIntArray[MAX_ARR_SIZE];
-
-			void clearI2CError(tSensors link, ubyte address);
-			bool waitForI2CBus(tSensors link);
-			bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen);
-			bool writeI2C(tSensors link, tByteArray &request);
+/**
+ * Returns x if it is between min and max. If outside the range,
+ * it returns min or max.
+ */
+#define clip(a, b, c) min2(c, max2(b, a))
 
 
-			/**
-			 * Clear out the error state on I2C bus by sending a bunch of dummy
-			 * packets.
-			 * @param link the port number
-			 * @param address the I2C address we're sending to
-			 */
-			void clearI2CError(tSensors link, ubyte address) {
-			  ubyte error_array[2];
-			  error_array[0] = 1;           // Message size
-			  error_array[1] = address; // I2C Address
+/**
+ * Array of bytes as a struct, this is a work around for RobotC's inability to pass an array to
+ * a function.
+ */
+typedef ubyte tByteArray[MAX_ARR_SIZE];
+typedef sbyte tsByteArray[MAX_ARR_SIZE];
+typedef ubyte tMassiveArray[128];             /*!< 128 byte array for very large blobs of data */
+typedef ubyte tHugeByteArray[64];             /*!< 64 byte array for very large blobs of data */
+typedef ubyte tBigByteArray[32];              /*!< 32 byte array for large blobs of data */
+typedef ubyte tIPaddr[4];                     /*!< Struct for holding an IP address */
 
-			#ifdef __COMMON_H_DEBUG__
-			  eraseDisplay();
-			  nxtDisplayTextLine(3, "rxmit: %d", ubyteToInt(error_array[1]));
-			  wait1Msec(2000);
-			#endif // __COMMON_H_DEBUG__
+/**
+ * Array of ints as a struct, this is a work around for RobotC's inability to pass an array to
+ * a function.
+ */
+typedef int tIntArray[MAX_ARR_SIZE];
 
-			  for (int i = 0; i < 5; i++) {
-				sendI2CMsg(link, &error_array[0], 0);
-				wait1Msec(5);
-			  }
-			}
+void clearI2CError(tSensors link, ubyte address);
+bool waitForI2CBus(tSensors link);
+bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen);
+bool writeI2C(tSensors link, tByteArray &request);
 
 
-			/**
-			 * Wait for the I2C bus to be ready for the next message
-			 * @param link the port number
-			 * @return true if no error occured, false if it did
-			 */
-			bool waitForI2CBus(tSensors link)
+/**
+ * Clear out the error state on I2C bus by sending a bunch of dummy
+ * packets.
+ * @param link the port number
+ * @param address the I2C address we're sending to
+ */
+void clearI2CError(tSensors link, ubyte address) {
+  ubyte error_array[2];
+  error_array[0] = 1;           // Message size
+  error_array[1] = address; // I2C Address
+
+#ifdef __COMMON_H_DEBUG__
+  eraseDisplay();
+  nxtDisplayTextLine(3, "rxmit: %d", ubyteToInt(error_array[1]));
+  wait1Msec(2000);
+#endif // __COMMON_H_DEBUG__
+
+  for (int i = 0; i < 5; i++) {
+    sendI2CMsg(link, &error_array[0], 0);
+    wait1Msec(5);
+  }
+}
+
+
+/**
+ * Wait for the I2C bus to be ready for the next message
+ * @param link the port number
+ * @return true if no error occured, false if it did
+ */
+bool waitForI2CBus(tSensors link)
+{
+  //TI2CStatus i2cstatus;
+  while (true)
+  {
+    //i2cstatus = nI2CStatus[link];
+    switch (nI2CStatus[link])
+    //switch(i2cstatus)
+    {
+	    case NO_ERR:
+	      return true;
+
+	    case STAT_COMM_PENDING:
+	      break;
+
+	    case ERR_COMM_CHAN_NOT_READY:
+	      break;
+
+	    case ERR_COMM_BUS_ERR:
+	#ifdef __COMMON_H_DEBUG__
+	      PlaySound(soundLowBuzz);
+	      while (bSoundActive) {}
+	#endif // __COMMON_H_DEBUG__
+        return false;
+    }
+    EndTimeSlice();
+  }
+}
+
+
+/**
+ * Write to the I2C bus. This function will clear the bus and wait for it be ready
+ * before any bytes are sent.
+ * @param link the port number
+ * @param request the data to be sent
+ * @return true if no error occured, false if it did
+ */
+bool writeI2C(tSensors link, tByteArray &request) {
+
+#if (__COMMON_H_SENSOR_CHECK__ == 1)
+  //TSensorTypes type = SensorType[link];
+
+  switch (SensorType[link])
+  {
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
+    case sensorI2CCustomFast:             break;
+    case sensorI2CCustomFast9V:           break;
+    case sensorI2CCustomFastSkipStates9V: break;
+    case sensorI2CCustomFastSkipStates:   break;
+    default:
+	    hogCPU();
+	    PlaySound(soundException);
+	    eraseDisplay();
+	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
+	    nxtDisplayCenteredTextLine(1, "ERROR");
+	    nxtDisplayCenteredTextLine(2, "You have not");
+	    nxtDisplayCenteredTextLine(3, "setup the sensor");
+	    nxtDisplayCenteredTextLine(4, "port correctly. ");
+	    nxtDisplayCenteredTextLine(5, "Please refer to");
+	    nxtDisplayCenteredTextLine(6, "one of the");
+	    nxtDisplayCenteredTextLine(7, "examples.");
+	    wait1Msec(10000);
+	    StopAllTasks();
+  }
+#endif
+
+  if (!waitForI2CBus(link)) {
+    clearI2CError(link, request[1]);
+
+    // Let's try the bus again, see if the above packets flushed it out
+    // clearI2CBus(link);
+    if (!waitForI2CBus(link))
+      return false;
+  }
+
+  sendI2CMsg(link, &request[0], 0);
+
+  if (!waitForI2CBus(link)) {
+    clearI2CError(link, request[1]);
+    sendI2CMsg(link, &request[0], 0);
+    if (!waitForI2CBus(link))
+      return false;
+  }
+  return true;
+}
+
+
+/**
+ * Write to the I2C bus. This function will clear the bus and wait for it be ready
+ * before any bytes are sent.
+ * @param link the port number
+ * @param request the data to be sent
+ * @param reply array to hold received data
+ * @param replylen the number of bytes (if any) expected in reply to this command
+ * @return true if no error occured, false if it did
+ */
+bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen) {
+  // clear the input data buffer
+
+#if (__COMMON_H_SENSOR_CHECK__ == 1)
+  //TSensorTypes type = SensorType[link];
+
+  switch (SensorType[link])
+  {
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
+    case sensorI2CCustomFast:             break;
+    case sensorI2CCustomFast9V:           break;
+    case sensorI2CCustomFastSkipStates9V: break;
+    case sensorI2CCustomFastSkipStates:   break;
+    default:
+	    hogCPU();
+	    PlaySound(soundException);
+	    eraseDisplay();
+	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
+	    nxtDisplayCenteredTextLine(1, "ERROR");
+	    nxtDisplayCenteredTextLine(2, "You have not");
+	    nxtDisplayCenteredTextLine(3, "setup the sensor");
+	    nxtDisplayCenteredTextLine(4, "port correctly. ");
+	    nxtDisplayCenteredTextLine(5, "Please refer to");
+	    nxtDisplayCenteredTextLine(6, "one of the");
+	    nxtDisplayCenteredTextLine(7, "examples.");
+	    wait1Msec(10000);
+	    StopAllTasks();
+  }
+#endif
+
+  if (!waitForI2CBus(link)) {
+    clearI2CError(link, request[1]);
+
+    // Let's try the bus again, see if the above packets flushed it out
+    // clearI2CBus(link);
+    if (!waitForI2CBus(link))
+      return false;
+  }
+
+  sendI2CMsg(link, &request[0], replylen);
+
+  if (!waitForI2CBus(link)) {
+    clearI2CError(link, request[1]);
+    sendI2CMsg(link, &request[0], replylen);
+    if (!waitForI2CBus(link))
+      return false;
+  }
+
+  // ask for the input to put into the data array
+  readI2CReply(link, &reply[0], replylen);
+
+  return true;
+}
+
+/**
+ * Create a unique ID (UID) for an NXT.  This based on the last 3 bytes
+ * of the Bluetooth address.  The first 3 bytes are manufacturer
+ * specific and identical for all NXTs and are therefore not used.
+ * @return a unique ID for the NXT.
+ */
+long getUID() {
+  TBTAddress btAddr;
+  getBTAddress(btAddr);
+
+  // Only last 3 bytes are unique in the BT address, the other three are for the
+  // manufacturer (LEGO):  http://www.coffer.com/mac_find/?string=lego
+   return (long)btAddr[5] + ((long)btAddr[4] << 8) + ((long)btAddr[3] << 16);
+}
+
+
+#endif // __COMMON_H__
+
+/*
+ * $Id: common.h 112 2012-10-04 17:44:38Z xander $
+ */
+/* @} */
+/* @} */
+
+// doesn't support daisychains
+// also TODO: setting a constant speed and a rotating a certain amount
+
+// TODO: look at isaac's library for this
+
+/*
+
+IMPORTANT:
+
+A. THIS CODE REQUIRES ENCODERS!
+
+B. Standard method argument order is:
+
+   	void foo(tSensors port, int daisychainLevel, int motorNumber, sbyte bar)
+
+   Where foo is your method name and bar is any variable that you need in addition to the standard three.
+   Bar is optional, but your method must always respect motorNumber, port and daisychainLevel.
+
+*/
+
+void I2C_MoveServo(tSensors port, int DaisyChainLevel, int ServoNumber, byte Position)
+{
+	tByteArray I2Crequest;
+	I2Crequest[0] = 3;
+	I2Crequest[1] = 0x02 * DaisyChainLevel;
+	I2Crequest[2] = 0x41 + ServoNumber;
+	I2Crequest[3] = Position;
+
+	writeI2C(port, I2Crequest);
+}
+
+void I2C_WritePMW(tSensors port, int DaisyChainLevel, byte Status)
+{
+	tByteArray I2Crequest;
+	tByteArray I2Cresponse;
+	I2Crequest[0] = 3;
+	I2Crequest[1] = 0x02 * DaisyChainLevel;
+	I2Crequest[2] = 0x48;
+	I2Crequest[3] = Status;
+	writeI2C(port, I2Crequest, I2Cresponse, 1);
+}
+
+void I2C_SetMotorSpeed(tSensors port, int daisychainLevel, int MotorNumber, sbyte Speed)
+{
+	daisychainLevel --;
+	tByteArray I2Crequest;
+
+	I2Crequest[0] = 4;
+
+	// daisychain level 0 will add 0, daisychain level 1 will add 2 to get 0x04, etc.
+	I2Crequest[1] = 0x02 + daisychainLevel*2;
+
+
+	if(MotorNumber == 1)
+	{
+		I2Crequest[2] = 0x44;
+		// if we're on motor 1 mode comes first...
+		I2Crequest[3] = 0b00000001;
+		I2Crequest[4] = Speed;
+	}
+	else
+	{
+		I2Crequest[2] = 0x46;
+		// ...but if we're on motor 2, speed comes first.
+		I2Crequest[3] = Speed;
+		I2Crequest[4] = 0b00000001;
+	}
+
+	writeI2C(port, I2Crequest);
+}
+
+// pass this 1 or 2 for the motor and S[1-4] for the port
+long I2C_GetEncoderPosition(tSensors port, int daisychainLevel, int MotorNumber)
+{
+		daisychainLevel--;
+		//initializes the arrays
+		tByteArray I2Crequest;
+		tByteArray I2Cresponse;
+
+		//sets the number of bytes to send:
+		I2Crequest[0] = 2;
+
+		//sends the adress as the first byte
+		//daisychain level 0 will add 0, daisychain level 1 will add 2 to get 0x04, etc.
+	  I2Crequest[1] = 0x02 + daisychainLevel*2;
+
+	  //sets the starting position to start sending data at
+	  if (MotorNumber == 1)
+	  {
+	  	I2Crequest[2] = 0x4C;
+		}
+		else
+		{
+		  I2Crequest[2] = 0x50;
+		}
+
+	  //writes the data, and gets the response
+	  writeI2C(port, I2Crequest, I2Cresponse, 4);
+
+	  //creates a long out of the bytes
+	  //note: when debugging with any %i construct, this will be cast to an integer and will overflow at 32767!
+	  long EncoderValue = (I2Cresponse[0] << 24) + (I2Cresponse[1] << 16) + (I2Cresponse[2] << 8) + (I2Cresponse[3] << 0);
+
+	  //returns the long
+  	return EncoderValue;
+}
+
+// motor should be 1 or 2, port should be S[1-4], Input should be the position to move to
+void I2C_SetEncoderPosition(tSensors port, int daisychainLevel, int MotorNumber, long EncoderPosition, byte MotorSpeed)
+{
+	daisychainLevel--;
+
+	//initializes the arrays
+	tByteArray I2Crequest;
+
+	//sets the number of bytes to send:
+	I2Crequest[0] = 8;
+
+	//sends the adress as the first byte
+  I2Crequest[1] = 0x02 + daisychainLevel*2;
+
+	//sets the starting position to start sending data at
+  if (MotorNumber == 1)
+  {
+  	//sets the starting position
+  	I2Crequest[2] = 0x40;
+
+  	//passes in the target position
+  	I2Crequest[3] = (byte)((EncoderPosition >> 24) & 0x000000ff);
+	  I2Crequest[4] = (byte)((EncoderPosition >> 16) & 0x000000ff);
+	  I2Crequest[5] = (byte)((EncoderPosition >> 8) & 0x000000ff);
+	  I2Crequest[6] = (byte)(EncoderPosition & 0x000000ff);
+
+  	//sets the motor mode
+	  I2Crequest[7] = 0b00000010;
+
+  	//sets the motor power
+	  I2Crequest[8] = MotorSpeed;
+	}
+	else if (MotorNumber == 2)
+	{
+		//sets the starting position
+  	I2Crequest[2] = 0x46;
+
+	  //sets the motor power
+	  I2Crequest[3] = MotorSpeed;
+
+	  //sets the motor mode
+	  I2Crequest[4] = 0b00000010;
+
+	  //passes in the target position
+	  I2Crequest[5] = (byte)((EncoderPosition >> 24) & 0x000000ff);
+	  I2Crequest[6] = (byte)((EncoderPosition >> 16) & 0x000000ff);
+	  I2Crequest[7] = (byte)((EncoderPosition >> 8) & 0x000000ff);
+	  I2Crequest[8] = (byte)(EncoderPosition & 0x000000ff);
+  }
+
+  writeI2C(port, I2Crequest);
+}
+
+tSensors Sensors[100];
+int Motors_Length = 0;
+int Motors_DaisyChainLevel[100];
+int Motors_Number[100];
+int Motors_Speed[100];
+int Motors_Encoder[100];
+bool Motors_MovingToPosition[100];
+bool Motors_UpdateMotorsInitialized = false;
+task Motors_UpdateMotors;
+
+
+
+void Motors_SetAction(tSensors Sensor, int DaisyChain, int MNumber, int MSpeed, int MEncoder, bool MovingToList)
+{
+	bool NewValueAdded = false;
+
+	if(Motors_UpdateMotorsInitialized == false)
+	{
+		Motors_UpdateMotorsInitialized = true;
+		StartTask(Motors_UpdateMotors);
+	}
+
+	for(int i = 0; i < Motors_Length; i++)
+	{
+		writeDebugStreamLine("%i", Motors_Length);
+		if(Sensor == Sensors[i] && DaisyChain == Motors_DaisyChainLevel[i] && MNumber == Motors_Number[i])
+		{
+			Sensors[i] = Sensor;
+			Motors_Encoder[i] = MEncoder;
+			Motors_DaisyChainLevel[i] = DaisyChain;
+			Motors_Number[i] = MNumber;
+			Motors_Speed[i] = MSpeed;
+			Motors_MovingToPosition[i] = MovingToList;
+			NewValueAdded = true;
+		}
+	}
+	if(!NewValueAdded)
+	{
+		Sensors[Motors_Length] = Sensor;
+		Motors_DaisyChainLevel[Motors_Length] = DaisyChain;
+		Motors_Number[Motors_Length] = MNumber;
+		Motors_Encoder[Motors_Length] = MEncoder;
+		Motors_Speed[Motors_Length] = MSpeed;
+		Motors_MovingToPosition[Motors_Length] = MovingToList;
+		Motors_Length++;
+	}
+}
+
+void Motors_SetSpeed(tSensors Sensor, int DaisyChain, int MNumber, int MSpeed)
+{
+	Motors_SetAction(Sensor, DaisyChain, MNumber, MSpeed, 0, false);
+}
+
+void Motors_SetPosition(tSensors Sensor, int DaisyChain, int MNumber, int Encoder, int MSpeed)
+{
+	Motors_SetAction(Sensor, DaisyChain, MNumber, MSpeed, Encoder, true);
+}
+
+task Motors_UpdateMotors()
+{
+	while(true)
+	{
+		for(int i = 0; i < Motors_Length; i++)
+		{
+			if(Motors_MovingToPosition[i] == false)
 			{
-			  //TI2CStatus i2cstatus;
-			  while (true)
-			  {
-				//i2cstatus = nI2CStatus[link];
-				switch (nI2CStatus[link])
-				//switch(i2cstatus)
-				{
-					case NO_ERR:
-					  return true;
-
-					case STAT_COMM_PENDING:
-					  break;
-
-					case ERR_COMM_CHAN_NOT_READY:
-					  break;
-
-					case ERR_COMM_BUS_ERR:
-				#ifdef __COMMON_H_DEBUG__
-					  PlaySound(soundLowBuzz);
-					  while (bSoundActive) {}
-				#endif // __COMMON_H_DEBUG__
-					return false;
-				}
-				EndTimeSlice();
-			  }
+				I2C_SetMotorSpeed(Sensors[i], Motors_DaisyChainLevel[i], Motors_Number[i], Motors_Speed[i]);
 			}
-
-
-			/**
-			 * Write to the I2C bus. This function will clear the bus and wait for it be ready
-			 * before any bytes are sent.
-			 * @param link the port number
-			 * @param request the data to be sent
-			 * @return true if no error occured, false if it did
-			 */
-			bool writeI2C(tSensors link, tByteArray &request) {
-
-			#if (__COMMON_H_SENSOR_CHECK__ == 1)
-			  //TSensorTypes type = SensorType[link];
-
-			  switch (SensorType[link])
-			  {
-				case sensorI2CCustom:                 break;
-				case sensorI2CCustom9V:               break;
-				case sensorI2CCustomFast:             break;
-				case sensorI2CCustomFast9V:           break;
-				case sensorI2CCustomFastSkipStates9V: break;
-				case sensorI2CCustomFastSkipStates:   break;
-				default:
-					hogCPU();
-					PlaySound(soundException);
-					eraseDisplay();
-					nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-					nxtDisplayCenteredTextLine(1, "ERROR");
-					nxtDisplayCenteredTextLine(2, "You have not");
-					nxtDisplayCenteredTextLine(3, "setup the sensor");
-					nxtDisplayCenteredTextLine(4, "port correctly. ");
-					nxtDisplayCenteredTextLine(5, "Please refer to");
-					nxtDisplayCenteredTextLine(6, "one of the");
-					nxtDisplayCenteredTextLine(7, "examples.");
-					wait1Msec(10000);
-					StopAllTasks();
-			  }
-			#endif
-
-			  if (!waitForI2CBus(link)) {
-				clearI2CError(link, request[1]);
-
-				// Let's try the bus again, see if the above packets flushed it out
-				// clearI2CBus(link);
-				if (!waitForI2CBus(link))
-				  return false;
-			  }
-
-			  sendI2CMsg(link, &request[0], 0);
-
-			  if (!waitForI2CBus(link)) {
-				clearI2CError(link, request[1]);
-				sendI2CMsg(link, &request[0], 0);
-				if (!waitForI2CBus(link))
-				  return false;
-			  }
-			  return true;
-			}
-
-
-			/**
-			 * Write to the I2C bus. This function will clear the bus and wait for it be ready
-			 * before any bytes are sent.
-			 * @param link the port number
-			 * @param request the data to be sent
-			 * @param reply array to hold received data
-			 * @param replylen the number of bytes (if any) expected in reply to this command
-			 * @return true if no error occured, false if it did
-			 */
-			bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen) {
-			  // clear the input data buffer
-
-			#if (__COMMON_H_SENSOR_CHECK__ == 1)
-			  //TSensorTypes type = SensorType[link];
-
-			  switch (SensorType[link])
-			  {
-				case sensorI2CCustom:                 break;
-				case sensorI2CCustom9V:               break;
-				case sensorI2CCustomFast:             break;
-				case sensorI2CCustomFast9V:           break;
-				case sensorI2CCustomFastSkipStates9V: break;
-				case sensorI2CCustomFastSkipStates:   break;
-				default:
-					hogCPU();
-					PlaySound(soundException);
-					eraseDisplay();
-					nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-					nxtDisplayCenteredTextLine(1, "ERROR");
-					nxtDisplayCenteredTextLine(2, "You have not");
-					nxtDisplayCenteredTextLine(3, "setup the sensor");
-					nxtDisplayCenteredTextLine(4, "port correctly. ");
-					nxtDisplayCenteredTextLine(5, "Please refer to");
-					nxtDisplayCenteredTextLine(6, "one of the");
-					nxtDisplayCenteredTextLine(7, "examples.");
-					wait1Msec(10000);
-					StopAllTasks();
-			  }
-			#endif
-
-			  if (!waitForI2CBus(link)) {
-				clearI2CError(link, request[1]);
-
-				// Let's try the bus again, see if the above packets flushed it out
-				// clearI2CBus(link);
-				if (!waitForI2CBus(link))
-				  return false;
-			  }
-
-			  sendI2CMsg(link, &request[0], replylen);
-
-			  if (!waitForI2CBus(link)) {
-				clearI2CError(link, request[1]);
-				sendI2CMsg(link, &request[0], replylen);
-				if (!waitForI2CBus(link))
-				  return false;
-			  }
-
-			  // ask for the input to put into the data array
-			  readI2CReply(link, &reply[0], replylen);
-
-			  return true;
-			}
-
-			/**
-			 * Create a unique ID (UID) for an NXT.  This based on the last 3 bytes
-			 * of the Bluetooth address.  The first 3 bytes are manufacturer
-			 * specific and identical for all NXTs and are therefore not used.
-			 * @return a unique ID for the NXT.
-			 */
-			long getUID() {
-			  TBTAddress btAddr;
-			  getBTAddress(btAddr);
-
-			  // Only last 3 bytes are unique in the BT address, the other three are for the
-			  // manufacturer (LEGO):  http://www.coffer.com/mac_find/?string=lego
-			   return (long)btAddr[5] + ((long)btAddr[4] << 8) + ((long)btAddr[3] << 16);
-			}
-
-
-			#endif // __COMMON_H__
-
-			/*
-			 * $Id: common.h 112 2012-10-04 17:44:38Z xander $
-			 */
-			/* @} */
-			/* @} */
-
-			// doesn't support daisychains
-			// also TODO: setting a constant speed and a rotating a certain amount
-
-			// TODO: look at isaac's library for this
-
-			/*
-
-			IMPORTANT:
-
-			A. THIS CODE REQUIRES ENCODERS!
-
-			B. Standard method argument order is:
-
-				void foo(tSensors port, int daisychainLevel, int motorNumber, sbyte bar)
-
-			   Where foo is your method name and bar is any variable that you need in addition to the standard three.
-			   Bar is optional, but your method must always respect motorNumber, port and daisychainLevel.
-
-			*/
-
-			void I2C_MoveServo(tSensors port, int DaisyChainLevel, int ServoNumber, byte Position)
+			else if(Motors_MovingToPosition[i] == true)
 			{
-				tByteArray I2Crequest;
-				I2Crequest[0] = 3;
-				I2Crequest[1] = 0x02 * DaisyChainLevel;
-				I2Crequest[2] = 0x41 + ServoNumber;
-				I2Crequest[3] = Position;
-
-				writeI2C(port, I2Crequest);
+				I2C_SetEncoderPosition(Sensors[i], Motors_DaisyChainLevel[i], Motors_Number[i], Motors_Encoder[i], Motors_Speed[i]);
 			}
+		}
+	}
+}
 
-			void I2C_WritePMW(tSensors port, int DaisyChainLevel, byte Status)
-			{
-				tByteArray I2Crequest;
-				tByteArray I2Cresponse;
-				I2Crequest[0] = 3;
-				I2Crequest[1] = 0x02 * DaisyChainLevel;
-				I2Crequest[2] = 0x48;
-				I2Crequest[3] = Status;
-				writeI2C(port, I2Crequest, I2Cresponse, 1);
-			}
+bool Servos_Initialzied = false;
+task Servos_ServoUpdate;
 
-			void I2C_SetMotorSpeed(tSensors port, int daisychainLevel, int MotorNumber, sbyte Speed)
-			{
-				daisychainLevel --;
-				tByteArray I2Crequest;
+tSensors Servos_ServoPort[100];
+int Servos_DaisyChainLevel[100];
+int Servos_ServoNumber[100];
+int Servos_Position[100];
+int Servos_Length = 0;
 
-				I2Crequest[0] = 4;
+void Servos_SetPosition(tSensors Port, int DaisyChainLevel, int ServoNumber, byte ServoPosition)
+{
+	if(Servos_Initialzied == false)
+	{
+		StartTask(Servos_ServoUpdate);
+		Servos_Initialzied = true;
+	}
 
-				// daisychain level 0 will add 0, daisychain level 1 will add 2 to get 0x04, etc.
-				I2Crequest[1] = 0x02 + daisychainLevel*2;
+	bool PositionExists = false;
+	for(int i = 0; i < Servos_Length; i++)
+	{
+		if(Port == Servos_ServoPort[i] && DaisyChainLevel == Servos_DaisyChainLevel[i] && ServoNumber == Servos_ServoNumber)
+		{
+			Servos_Position[i] = ServoPosition;
+			PositionExists = true;
+		}
+	}
 
+	if(PositionExists == false)
+	{
+		Servos_ServoPort[Servos_Length] = Port;
+		Servos_DaisyChainLevel[Servos_Length] = DaisyChainLevel;
+		Servos_ServoNumber[Servos_Length] = ServoNumber;
+		Servos_Position[Servos_Length] = ServoPosition;
+		Servos_Length++;
+	}
+}
 
-				if(MotorNumber == 1)
-				{
-					I2Crequest[2] = 0x44;
-					// if we're on motor 1 mode comes first...
-					I2Crequest[3] = 0b00000001;
-					I2Crequest[4] = Speed;
-				}
-				else
-				{
-					I2Crequest[2] = 0x46;
-					// ...but if we're on motor 2, speed comes first.
-					I2Crequest[3] = Speed;
-					I2Crequest[4] = 0b00000001;
-				}
-
-				writeI2C(port, I2Crequest);
-			}
-
-			// pass this 1 or 2 for the motor and S[1-4] for the port
-			long I2C_GetEncoderPosition(tSensors port, int daisychainLevel, int MotorNumber)
-			{
-					daisychainLevel--;
-					//initializes the arrays
-					tByteArray I2Crequest;
-					tByteArray I2Cresponse;
-
-					//sets the number of bytes to send:
-					I2Crequest[0] = 2;
-
-					//sends the adress as the first byte
-					//daisychain level 0 will add 0, daisychain level 1 will add 2 to get 0x04, etc.
-				  I2Crequest[1] = 0x02 + daisychainLevel*2;
-
-				  //sets the starting position to start sending data at
-				  if (MotorNumber == 1)
-				  {
-					I2Crequest[2] = 0x4C;
-					}
-					else
-					{
-					  I2Crequest[2] = 0x50;
-					}
-
-				  //writes the data, and gets the response
-				  writeI2C(port, I2Crequest, I2Cresponse, 4);
-
-				  //creates a long out of the bytes
-				  //note: when debugging with any %i construct, this will be cast to an integer and will overflow at 32767!
-				  long EncoderValue = (I2Cresponse[0] << 24) + (I2Cresponse[1] << 16) + (I2Cresponse[2] << 8) + (I2Cresponse[3] << 0);
-
-				  //returns the long
-				return EncoderValue;
-			}
-
-			// motor should be 1 or 2, port should be S[1-4], Input should be the position to move to
-			void I2C_SetEncoderPosition(tSensors port, int daisychainLevel, int MotorNumber, long EncoderPosition, byte MotorSpeed)
-			{
-				daisychainLevel--;
-
-				//initializes the arrays
-				tByteArray I2Crequest;
-
-				//sets the number of bytes to send:
-				I2Crequest[0] = 8;
-
-				//sends the adress as the first byte
-			  I2Crequest[1] = 0x02 + daisychainLevel*2;
-
-				//sets the starting position to start sending data at
-			  if (MotorNumber == 1)
-			  {
-				//sets the starting position
-				I2Crequest[2] = 0x40;
-
-				//passes in the target position
-				I2Crequest[3] = (byte)((EncoderPosition >> 24) & 0x000000ff);
-				  I2Crequest[4] = (byte)((EncoderPosition >> 16) & 0x000000ff);
-				  I2Crequest[5] = (byte)((EncoderPosition >> 8) & 0x000000ff);
-				  I2Crequest[6] = (byte)(EncoderPosition & 0x000000ff);
-
-				//sets the motor mode
-				  I2Crequest[7] = 0b00000010;
-
-				//sets the motor power
-				  I2Crequest[8] = MotorSpeed;
-				}
-				else if (MotorNumber == 2)
-				{
-					//sets the starting position
-				I2Crequest[2] = 0x46;
-
-				  //sets the motor power
-				  I2Crequest[3] = MotorSpeed;
-
-				  //sets the motor mode
-				  I2Crequest[4] = 0b00000010;
-
-				  //passes in the target position
-				  I2Crequest[5] = (byte)((EncoderPosition >> 24) & 0x000000ff);
-				  I2Crequest[6] = (byte)((EncoderPosition >> 16) & 0x000000ff);
-				  I2Crequest[7] = (byte)((EncoderPosition >> 8) & 0x000000ff);
-				  I2Crequest[8] = (byte)(EncoderPosition & 0x000000ff);
-			  }
-
-			  writeI2C(port, I2Crequest);
-			}
-
-			tSensors Sensors[100];
-			int Motors_Length = 0;
-			int Motors_DaisyChainLevel[100];
-			int Motors_Number[100];
-			int Motors_Speed[100];
-			int Motors_Encoder[100];
-			bool Motors_MovingToPosition[100];
-			bool Motors_UpdateMotorsInitialized = false;
-			task Motors_UpdateMotors;
-
-
-
-			void Motors_SetAction(tSensors Sensor, int DaisyChain, int MNumber, int MSpeed, int MEncoder, bool MovingToList)
-			{
-				bool NewValueAdded = false;
-
-				if(Motors_UpdateMotorsInitialized == false)
-				{
-					Motors_UpdateMotorsInitialized = true;
-					StartTask(Motors_UpdateMotors);
-				}
-
-				for(int i = 0; i < Motors_Length; i++)
-				{
-					writeDebugStreamLine("%i", Motors_Length);
-					if(Sensor == Sensors[i] && DaisyChain == Motors_DaisyChainLevel[i] && MNumber == Motors_Number[i])
-					{
-						Sensors[i] = Sensor;
-						Motors_Encoder[i] = MEncoder;
-						Motors_DaisyChainLevel[i] = DaisyChain;
-						Motors_Number[i] = MNumber;
-						Motors_Speed[i] = MSpeed;
-						Motors_MovingToPosition[i] = MovingToList;
-						NewValueAdded = true;
-					}
-				}
-				if(!NewValueAdded)
-				{
-					Sensors[Motors_Length] = Sensor;
-					Motors_DaisyChainLevel[Motors_Length] = DaisyChain;
-					Motors_Number[Motors_Length] = MNumber;
-					Motors_Encoder[Motors_Length] = MEncoder;
-					Motors_Speed[Motors_Length] = MSpeed;
-					Motors_MovingToPosition[Motors_Length] = MovingToList;
-					Motors_Length++;
-				}
-			}
-
-			void Motors_SetSpeed(tSensors Sensor, int DaisyChain, int MNumber, int MSpeed)
-			{
-				Motors_SetAction(Sensor, DaisyChain, MNumber, MSpeed, 0, false);
-			}
-
-			void Motors_SetPosition(tSensors Sensor, int DaisyChain, int MNumber, int Encoder, int MSpeed)
-			{
-				Motors_SetAction(Sensor, DaisyChain, MNumber, MSpeed, Encoder, true);
-			}
-
-			task Motors_UpdateMotors()
-			{
-				while(true)
-				{
-					for(int i = 0; i < Motors_Length; i++)
-					{
-						if(Motors_MovingToPosition[i] == false)
-						{
-							I2C_SetMotorSpeed(Sensors[i], Motors_DaisyChainLevel[i], Motors_Number[i], Motors_Speed[i]);
-						}
-						else if(Motors_MovingToPosition[i] == true)
-						{
-							I2C_SetEncoderPosition(Sensors[i], Motors_DaisyChainLevel[i], Motors_Number[i], Motors_Encoder[i], Motors_Speed[i]);
-						}
-					}
-				}
-			}
-
-			bool Servos_Initialzied = false;
-			task Servos_ServoUpdate;
-
-			tSensors Servos_ServoPort[100];
-			int Servos_DaisyChainLevel[100];
-			int Servos_ServoNumber[100];
-			int Servos_Position[100];
-			int Servos_Length = 0;
-
-			void Servos_SetPosition(tSensors Port, int DaisyChainLevel, int ServoNumber, byte ServoPosition)
-			{
-				if(Servos_Initialzied == false)
-				{
-					StartTask(Servos_ServoUpdate);
-					Servos_Initialzied = true;
-				}
-
-				bool PositionExists = false;
-				for(int i = 0; i < Servos_Length; i++)
-				{
-					if(Port == Servos_ServoPort[i] && DaisyChainLevel == Servos_DaisyChainLevel[i] && ServoNumber == Servos_ServoNumber)
-					{
-						Servos_Position[i] = ServoPosition;
-						PositionExists = true;
-					}
-				}
-
-				if(PositionExists == false)
-				{
-					Servos_ServoPort[Servos_Length] = Port;
-					Servos_DaisyChainLevel[Servos_Length] = DaisyChainLevel;
-					Servos_ServoNumber[Servos_Length] = ServoNumber;
-					Servos_Position[Servos_Length] = ServoPosition;
-					Servos_Length++;
-				}
-			}
-
-			task Servos_ServoUpdate()
-			{
-				while(true)
-				{
-					for(int i = 0; i < Servos_Length; i++)
-					{
-						I2C_WritePMW(Servos_ServoPort[i], Servos_DaisyChainLevel[i], 0);
-						I2C_MoveServo(Servos_ServoPort[i], Servos_DaisyChainLevel[i], Servos_ServoNumber[i], Servos_Position[i]);
-					}
-				}
-			}
-		</p>
+task Servos_ServoUpdate()
+{
+	while(true)
+	{
+		for(int i = 0; i < Servos_Length; i++)
+		{
+			I2C_WritePMW(Servos_ServoPort[i], Servos_DaisyChainLevel[i], 0);
+			I2C_MoveServo(Servos_ServoPort[i], Servos_DaisyChainLevel[i], Servos_ServoNumber[i], Servos_Position[i]);
+		}
+	}
+}
+</p>
 	</body>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
 	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
 </html>
