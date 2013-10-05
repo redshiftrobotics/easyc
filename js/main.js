@@ -5,6 +5,7 @@ var BlocksAdded = 0;
 var Context;
 var Canvas;
 
+
 function RefreshPage()
 {
 	document.getElementById("TextArea").value = "";
@@ -18,25 +19,26 @@ function Initialize()
 	Context.fillStyle = "Black";
 	Context.fillRect(0, 0, Canvas.width, Canvas.height);
 	Sleep();
-	// download the libraries
-	var library_base_url = "https://raw.github.com/saasrobotics/Robotics2013-14/master/Libraries/";
-	var libraryRequests = {};
-	var libraryRequests.common = new XMLHttpRequesst();
-	libraryReqests.common.open("get", library_base_url + "Common.h", true);
-	var libraryRequests.I2C = new XMLHttpRequest();
-	libraryRequests.I2C.open("get", library_base_url + "I2C.h", true);
-	var libraryRequests.motors = new XMLHttpRequest();
-	libraryRequests.motors.open("get", library_base_url + "Motors.h", true);
-	var libraryRequests.servos = new XMLHttpRequest();
-	libraryRequests.servos.open("get", library_base_url + "Servos.h", true);
 }
 
 function Add()
 {
 	var AddedBlock = false;
-	if(CurrentBlock == "Sleep" && document.getElementById("SleepSeconds").value != "")
+	
+	if(CurrentBlock == "ServoPosition" && document.getElementById("ServoPositionPosition").value != "" && document.getElementById("ServoPositionPort").value != "" && document.getElementById("ServoPositionDaisyChain").value != "" && document.getElementById("ServoPositionMotorNumber").value != "")
 	{
-		ReturnCode[ReturnCode.length] = "Sleep(" + document.getElementById("SleepSeconds").value + ");\n";
+		ReturnCode[ReturnCode.length] = "Servos_SetPosition(S" + document.getElementById("ServoPositionPort").value + ", " + document.getElementById("ServoPositionDaisyChain").value + ", " + document.getElementById("ServoPositionMotorNumber").value + ", " + document.getElementById("ServoPositionPosition").value + ");\n";
+		
+		Context.fillStyle = "Pink";
+		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
+		Context.fillStyle = "Black";
+		Context.fillText("Servo position " + document.getElementById("ServoPositionPosition").value + ", port S" + document.getElementById("ServoPositionPort").value + ", daisy chain level " + document.getElementById("ServoPositionDaisyChain").value + ", servo " + document.getElementById("ServoPositionMotorNumber").value, 10, 25 + BlocksAdded * 55);
+		
+		AddedBlock = true;
+	}
+	else if(CurrentBlock == "Sleep" && document.getElementById("SleepSeconds").value != "")
+	{
+		ReturnCode[ReturnCode.length] = "Sleep(" + document.getElementById("SleepSeconds").value * 1000 + ");\n";
 		
 		Context.fillStyle = "Blue";
 		Context.fillRect(5, 5 + BlocksAdded * 55, 300, 50);
@@ -95,6 +97,11 @@ function Add()
 
 function ResetTextBoxes()
 {
+	document.getElementById("ServoPositionPosition").value = "";
+	document.getElementById("ServoPositionPort").value = "";
+	document.getElementById("ServoPositionDaisyChain").value = "";
+	document.getElementById("ServoPositionMotorNumber").value = "";
+	
 	document.getElementById("SleepSeconds").value = "";
 	document.getElementById("TurnRotationsMotor").value = "";
 	document.getElementById("TurnRotationsPort").value = "";
@@ -112,6 +119,11 @@ function Sleep()
 	ShowElement("Sleep");
 }
 
+function ServoPosition()
+{
+	ShowElement("ServoPosition");
+}
+
 function TurnRotations()
 {
 	ShowElement("TurnRotations");
@@ -127,10 +139,10 @@ function ShowElement(ID)
 	$("#Sleep").hide();
 	$("#TurnRotations").hide();
 	$("#MoveSpeed").hide();
+	$("#ServoPosition").hide();
 	$("#" + ID).show();
 	CurrentBlock = ID;
 }
-
 
 
 
