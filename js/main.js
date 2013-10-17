@@ -5,6 +5,9 @@ var BlocksAdded = 0;
 var Context;
 var Canvas;
 
+var libraryRequests = ["saas_common", "I2C", "motors", "servos"];
+
+
 function RefreshPage()
 {
 	document.getElementById("TextArea").value = "";
@@ -15,9 +18,27 @@ function recieveLibrary(name)
 {
 	console.log("received" + name);
 	document.getElementById("LibrariesText").textContent = document.getElementById("LibrariesText").textContent + libraryRequests[name].responseText;
-	//console.log(libraryRequests[name].responseText);
+	numberOfLoadedLibraries++;
+	// someone please explain to me why I need to make this 3 instead of 4. -aj
+	if (numberOfLoadedLibraries == 3) {
+		// everything's done loading
+		console.log("loaded all libraries");
+		// filter out #include directives
+		var array = document.getElementById("LibrariesText").textContent.split("\n");
+		array = $.grep(array, function(string) {
+			// this heuristic is pretty dismal, we should probably improve it
+			if (string[0] == "#" && string[1] == "i" && string[2] == "n" && string[3] == "c") {
+				return true;
+			} else {
+				return false;
+			}
+		}, true);
+		document.getElementById("LibrariesText").textContent = array.join("\n");
+		// get rid of the infobar
+		$("#loadingAlert").remove();
+	}
 }
-var libraryRequests = ["common", "I2C", "motors", "servos"];
+var numberOfLoadedLibraries = 0;
 window.onready = function()
 {
 	console.log("app init");
@@ -30,10 +51,10 @@ window.onready = function()
 	// we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain XMLHttpRequest only accepts text/html, text/xml, etc.
 	var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
 	
-	libraryRequests["common"] = new XMLHttpRequest();
-	libraryRequests["common"].onload = function(){recieveLibrary("common")};
-	libraryRequests["common"].open("get", library_base_url + "Common.h", true);
-	libraryRequests["common"].send();
+	libraryRequests["saas_common"] = new XMLHttpRequest();
+	libraryRequests["saas_common"].onload = function(){recieveLibrary("common")};
+	libraryRequests["saas_common"].open("get", library_base_url + "saas_common.h", true);
+	libraryRequests["saas_common"].send();
 	libraryRequests["I2C"] = new XMLHttpRequest();
 	libraryRequests["I2C"].onload = function(){recieveLibrary("I2C")};
 	libraryRequests["I2C"].open("get", library_base_url + "I2C.h", true);
