@@ -1,6 +1,6 @@
 var CurrentBlock;
 var ReturnCode = new Array();
-var CodeAddition = $("#LibrariesText").text();
+var CodeAddition;
 var BlocksAdded = 0;
 var Context;
 var Canvas;
@@ -33,8 +33,12 @@ function recieveLibrary(name)
 			}
 		}, true);
 		document.getElementById("LibrariesText").textContent = array.join("\n");
-		// get rid of the infobar
+		// get rid of the infobar and enable the app
 		$("#loadingAlert").remove();
+		$("#addButton").removeAttr("disabled");
+		
+		// instantiate the data into JavaScript
+		CodeAddition = $("#LibrariesText").text();
 	}
 }
 var numberOfLoadedLibraries = 0;
@@ -48,7 +52,7 @@ window.onready = function()
 	Sleep();
 	// download the libraries
 	// TODO: don't use rawgithub.com
-	// we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain XMLHttpRequest only accepts text/html, text/xml, etc.
+	// we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain and XMLHttpRequest only accepts text/html, text/xml, etc.
 	var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
 	
 	// TODO: refactor this mess
@@ -72,6 +76,7 @@ window.onready = function()
 
 function Add()
 {
+console.log("add()");
 	var AddedBlock = false;
 	
 	if(CurrentBlock == "ServoPosition" && document.getElementById("ServoPositionPosition").value != "" && document.getElementById("ServoPositionPort").value != "" && document.getElementById("ServoPositionDaisyChain").value != "" && document.getElementById("ServoPositionMotorNumber").value != "")
@@ -192,7 +197,3 @@ function ShowElement(ID)
 	$("#" + ID).show();
 	CurrentBlock = ID;
 }
-
-
-
-

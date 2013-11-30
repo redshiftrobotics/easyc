@@ -38,13 +38,15 @@
 		<div class="btn-group">
 			<button class="btn btn-large" onClick="RefreshPage();">New Project</button>
 			<button class="btn btn-large" data-toggle="modal" data-target="#helpModal">Help</button>
-			<button class="btn btn-large" onclick="window.location = \"http://www.seattleacademy.net/robots\"">SAAS Robotics Home</button>
+			<button class="btn btn-large" onclick="window.location = 'http://www.seattleacademy.net/robots'">SAAS Robotics Home</button>
 		</div>
 	</div>
+	        <div class = "row span12 alert alert-info" id = "loadingAlert">Just a sec, I need to load some tools... this shouldn't take too long.</div>
+ 
 		<div class = "row">
 			<div class = "span4">
-				<h5>This is where you will see your program.</h5>
-				<canvas id = 'canvas' height = "1000" width = "310" >Canvas not supported</canvas>
+			  <h5>This is where you will see your program.</h5>
+				<canvas id = "canvas" height = "1000" width = "310" >Canvas not supported</canvas>
 			</div>
 			<div class = "span5">
 				<h5>This is where you will add blocks.</h5>
@@ -86,7 +88,7 @@
 					<input type="text" id = "ServoPositionPosition" placeholder="Target servo position">
 				</div>
 				
-				<button class="btn" onclick = "Add();">Add</button>
+				<button class="btn" id="addButton" onclick = "Add();" disabled>Add</button>
 			
 			</div>
 			<div class = "span3">
@@ -95,7 +97,7 @@
 			</div>
 		</div>
 		
-		<p id = "LibrariesText" hidden = "True">
+		<p id = "LibrariesText" hidden>
 		</p>
 	</body>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

@@ -15,3 +15,8 @@ footer
 {
 	text-align: center;
 }
+
+#loadingAlert
+{
+	margin: 1em;
+}
