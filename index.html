@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>RobotC Precompiler</title>
 		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" href="css/bootstrap-responsive.css">
 		<link rel="stylesheet" href="css/main.css">
  	</head>
 	
@@ -32,65 +32,75 @@
 		</div>
 	</div>
 	
-	<div class = "row span12 hero-unit" id="hero">
+	<div class = "row span12 hero-unit">
 		<h1>Welcome to EasyC,</h1>
 		<h4>A project to make writing code for RobotC as easy as breathing.</h4>
 		<div class="btn-group">
 			<button class="btn btn-large" onClick="RefreshPage();">New Project</button>
-			<button class="btn btn-large" href = "mailto:izinda@hotmail.com?Subject=EasyC">Contact Isaac</button>
 			<button class="btn btn-large" data-toggle="modal" data-target="#helpModal">Help</button>
+			<button class="btn btn-large" onclick="window.location = \"http://www.seattleacademy.net/robots\"">SAAS Robotics Home</button>
 		</div>
 	</div>
-		<div class = "alert alert-info" id = "loadingAlert">Just a sec, I need to load some tools... this shouldn't take too long.</div>
 		<div class = "row">
 			<div class = "span4">
 				<h5>This is where you will see your program.</h5>
 				<canvas id = 'canvas' height = "1000" width = "310" >Canvas not supported</canvas>
 			</div>
-			<div class = "span4">
+			<div class = "span5">
 				<h5>This is where you will add blocks.</h5>
-				<select>
-					<option onclick = "Sleep();">Sleep</option>
-					<option onclick = "TurnRotations();">TurnRotations</option>
-					<option onclick = "MoveSpeed();">MoveSpeed</option>
-				</select>
+				
+				<div class="btn-group">
+					<button class = "btn" onclick = "Sleep();">Sleep</button>
+					<button class = "btn" onclick = "TurnRotations();">Motor Rotations</button>
+					<button class = "btn" onclick = "MoveSpeed();">Motor Speed</button>
+					<button class = "btn" onclick = "ServoPosition();">Move Servo</button>
+				</div>
 				
 				<div id = "Sleep">
+					<h5>Sleep for Time</h5>
 					<input type="text" id = "SleepSeconds" placeholder="Seconds to sleep">
 				</div>
 				
 				<div id = "TurnRotations">
-					<input type="text" id = "TurnRotationsPort" placeholder="Motor port">
+					<h5>Turn Motor by Rotations</h5>
+					<input type="text" id = "TurnRotationsPort" placeholder="Port">
 					<input type="text" id = "TurnRotationsDaisyChain" placeholder="Daisy Chain Level">
 					<input type="text" id = "TurnRotationsMotor" placeholder="Motor number">
-					<input type="text" id = "TurnRotationsSpeed" placeholder="Speed to turn at">
-					<input type="text" id = "TurnRotationsNumber" placeholder="Number of rotations to turn">
+					<input type="text" id = "TurnRotationsSpeed" placeholder="Speed">
+					<input type="text" id = "TurnRotationsNumber" placeholder="Rotations to turn">
 				</div>
-
 				
 				<div id = "MoveSpeed">
-					<input type="text" id = "MoveSpeedSpeed" placeholder="Speed to move at">
-					<input type="text" id = "MoveSpeedPort" placeholder="Motor port">
+					<h5>Move Motor by Speed</h5>
+					<input type="text" id = "MoveSpeedPort" placeholder="Port">
 					<input type="text" id = "MoveDaisyChain" placeholder="Daisy Chain Level">
 					<input type="text" id = "MoveSpeedMotor" placeholder="Motor number">
+					<input type="text" id = "MoveSpeedSpeed" placeholder="Speed">
+				</div>
+				
+				<div id = "ServoPosition">
+					<h5>Move Servo to Position</h5>
+					<input type="text" id = "ServoPositionPort" placeholder="Port">
+					<input type="text" id = "ServoPositionDaisyChain" placeholder="Daisy Chain Level">
+					<input type="text" id = "ServoPositionMotorNumber" placeholder="Servo number">
+					<input type="text" id = "ServoPositionPosition" placeholder="Target servo position">
 				</div>
 				
 				<button class="btn" onclick = "Add();">Add</button>
 			
 			</div>
-			<div class = "span4">
+			<div class = "span3">
 				<h5>This is where your output text will be.</h5>
 				<textarea id = "TextArea" rows="20"></textarea>
 			</div>
 		</div>
 		
 		<p id = "LibrariesText" hidden = "True">
-
-</p>
+		</p>
 	</body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
 	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
 </html>
