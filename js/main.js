@@ -20,6 +20,15 @@ function RefreshPage()
 	location.reload();
 }
 
+function requestLibrary(name)
+{
+	console.log("requesting " + name);
+	libraryRequests[name] = new XMLHttpRequest();
+	libraryRequests[name].onload = function(){recieveLibrary(name);};
+	libraryRequests[name].open("get", library_base_url + name + ".h", true);
+	libraryRequests[name].send();
+}
+
 function recieveLibrary(name)
 {
 	console.log("received " + name);
@@ -56,26 +65,11 @@ window.onready = function()
 	Sleep();
 	console.log("instantiated canvas context");
 	// download the libraries
-	// TODO: don't use rawgithub.com
-	// we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain and XMLHttpRequest only accepts text/html, text/xml, etc.
-	var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
 	// TODO: refactor this mess
-	libraryRequests["drivers/common"] = new XMLHttpRequest();
-	libraryRequests["drivers/common"].onload = function(){recieveLibrary("drivers/common");};
-	libraryRequests["drivers/common"].open("get", library_base_url + "drivers/common.h", true);
-	libraryRequests["drivers/common"].send();
-	libraryRequests["I2C"] = new XMLHttpRequest();
-	libraryRequests["I2C"].onload = function(){recieveLibrary("I2C");};
-	libraryRequests["I2C"].open("get", library_base_url + "I2C.h", true);
-	libraryRequests["I2C"].send();
-	libraryRequests["motors"] = new XMLHttpRequest();
-	libraryRequests["motors"].onload = function(){recieveLibrary("motors");};
-	libraryRequests["motors"].open("get", library_base_url + "Motors.h", true);
-	libraryRequests["motors"].send();
-	libraryRequests["servos"] = new XMLHttpRequest();
-	libraryRequests["servos"].onload = function(){recieveLibrary("servos");};
-	libraryRequests["servos"].open("get", library_base_url + "Servos.h", true);
-	libraryRequests["servos"].send();
+	requestLibrary("drivers/common");
+	requestLibrary("I2C");
+	requestLibrary("Servos");
+	requestLibrary("Motors");
 	console.log("all requests sent");
 };
 
