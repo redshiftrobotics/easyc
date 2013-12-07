@@ -10,14 +10,9 @@ var libraryText = ["drivers/common", "I2C", "Motors", "Servos"];
 
 // TODO: don't use rawgithub.com
 // we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain and XMLHttpRequest only accepts text/html, text/xml, etc.
-const var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
+var library_base_url = "https://rawgithub.com/saasrobotics/Robotics2013-14/master/libraries/";
 
-const var pragmaConfig = "
-#pragma config(Sensor, S1,     ,               sensorI2CCustom)
-#pragma config(Sensor, S2,     ,               sensorI2CCustom)
-#pragma config(Sensor, S3,     ,               sensorI2CCustom)
-#pragma config(Sensor, S4,     ,               sensorI2CCustom)
-"
+var pragmaConfig = "#pragma config(Sensor, S1,     ,               sensorI2CCustom)\n#pragma config(Sensor, S2,     ,               sensorI2CCustom)\n#pragma config(Sensor, S3,     ,               sensorI2CCustom)\n#pragma config(Sensor, S4,     ,               sensorI2CCustom)\n";
 
 function RefreshPage()
 {
