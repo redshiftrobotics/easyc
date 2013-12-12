@@ -7,6 +7,7 @@ var Canvas;
 
 var libraryRequests = ["drivers/common", "I2C", "Motors", "Servos"];
 var libraryText = ["drivers/common", "I2C", "Motors", "Servos"];
+var numberOfLoadedLibraries = 0;
 
 // TODO: don't use rawgithub.com
 // we have to use rawgithub.com instead of raw.github.com because GitHub sends a MIME of text/plain and XMLHttpRequest only accepts text/html, text/xml, etc.
@@ -54,7 +55,7 @@ function recieveLibrary(name)
 		$("#addButton").removeAttr("disabled");
 	}
 }
-var numberOfLoadedLibraries = 0;
+
 window.onready = function()
 {
 	console.log("app init");
@@ -141,7 +142,18 @@ console.log("add()");
 		document.getElementById("TextArea").value = CodeAddition;
 		document.getElementById("TextArea").value += "task main() {\n";
 		document.getElementById("TextArea").value += TextAreaValue;
-		document.getElementById("TextArea").value += "}\n";
+		var tmp = "";
+		for (var i = 1; i<5; i++) {
+			// 2 is a hack to ensure that we don't accidentally break a servo.
+			// basically, the first two daisychains are motor controllers and the third is a servo controller.
+			// we don't want to blindly send a motor command to a servo controller just in case we accidentally trigger some destructive behavior.
+			for (var j = 1; j<3; j++) {
+				for (var k = 1; k<3; k++) {
+					tmp += "I2C_SetMotorSpeed(S" + i + ", " + j + ", " + k + ", 0);";
+				}
+		}
+}
+		document.getElementById("TextArea").value += tmp + "}\n";
 		
 		
 		ResetTextBoxes();
