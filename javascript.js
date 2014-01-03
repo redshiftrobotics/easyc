@@ -267,7 +267,7 @@ function programDragStart(e)
 {
   dragSrcEl = this;
   e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData('text/html', this)
+  e.dataTransfer.setData('text/html', this.innerHTML)
   return false;
 }
 
