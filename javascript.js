@@ -192,17 +192,8 @@ function parseProgram() {
 	
 	case "stop-all-motors":
 		var str = "";
-		for (var port = 1; port <= 4; port++) {
-			for (var daisychain = 1; daisychain <= 4; daisychain++) {
-				for (var motor = 1; motor <= 2; motor++) {
-					str += "I2C_SetMotorSpeed(S" + port + ", " + daisychain + ", " + motor + ", 0);\n";
-				}
-				for (var servo = 1; servo <= 6; servo++) {
-					str += "I2C_SetServoSpeed(S" + port + ", " + daisychain + ", " + servo + ", 0);\n";
-				}
-			}
-		}
-		alert(str);
+		str += "Servos_StopAll();\n"
+		str += "Motors_StopAll();\n"
 		programString += str;
 		break;
       default:
