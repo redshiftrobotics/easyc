@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+
 <html>
 	<head>
 		<title>EasyC | SAAS - Robotics </title>
@@ -8,6 +10,13 @@
 		<script src="js/intro.min.js"></script>
 	</head>
 	<body>
+
+		<div id='overlay'></div>
+		<div id='modal'>
+		    <div id='content'>No JavaScript Yet!</div>
+		    <a href='#' id='close'>close</a>
+		</div>
+
 		<div class="global-header">
 			<div class="title">Welcome to EasyC!</div>
 			<div data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</div>
@@ -131,7 +140,7 @@
 			<div data-step="2" data-intro="This is the workbench. Drag blocks from the toolbox into this space to create your program. You can input command values in either the toolbox or the workbench." class="panel-right droppable">
 				<h2 id="workbench-title" >Workbench:</h2>
 				<div id="workbench">
-					<h1 id = "add">Drop</h1>
+					<h1 id = "add">Drop Here</h1>
 				</div>
 				
 			</div>

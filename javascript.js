@@ -204,13 +204,17 @@ function parseProgram() {
 
 var dragSrcEl = null;
 
-function toolboxDragStart(e) {
-  console.log("toolbox drag start event fired");
+function toolboxDragStart(e) 
+{
   dragSrcEl = this;
+
   e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', this.innerHTML);
+  return false;
 }
 
-function trashDrop(e) {
+function trashDrop(e) 
+{
   console.log("trash drop event fired");
   if(dragSrcEl.parentNode.getAttribute('id') == "workbench")
   {
@@ -288,7 +292,7 @@ function programDragStart(e)
 
 
   e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData('text/html', this.innerHTML)
+  e.dataTransfer.setData('text/html', this.innerHTML);
   return false;
 }
 
@@ -351,55 +355,33 @@ function addDragLeave(e) {
   return false;
 }
 
-$("document").ready(function() {
-
-  $("input").keypress(function(event)
+$("document").ready(function() 
+{
+  if (isIE())
   {
-
-
-    // $(event.target).attr("value", $(event.target).val());
-    // alert($(event.target).val());
-
-    // var InputLength = $("input").length;
-    // for(i = 0; i < InputLength; i++)
-    // {
-    //   alert($("input")[i]);
-    //   $("input")[i].attr({value: $("input")[i].val()});
-    // }
-  });
-
-
-
-
-  var trashElement = $("#trash");
-  var add = $("#add");
+    alert("ie");
+  }
+  var trashElement = document.getElementById("trash");
+  var add = document.getElementById("add");
   var commandblocks = $('.command');
-
-	console.log("app init");
 
 	// download the libraries
 	requestLibrary("drivers/common");
 	requestLibrary("I2C");
 	requestLibrary("Servos");
 	requestLibrary("Motors");
-	console.log("all requests sent");
 	
-	trashElement.on('dragover', trashDragOver);
-	trashElement.on('drop', trashDrop);
-	trashElement.on('dragleave', trashDragLeave);
-	console.log("registered event handlers for the trash can");
+	trashElement.addEventListener('dragover', trashDragOver, false);
+	trashElement.addEventListener('drop', trashDrop, false);
+	trashElement.addEventListener('dragleave', trashDragLeave, false);
 	
-	add.on('dragover', addDragOver);
-	add.on('drop', addDrop);
-	add.on('dragleave', addDragLeave);
-	console.log("registered event handlers for the workbench");
+	add.addEventListener('dragover', addDragOver, false);
+	add.addEventListener('drop', addDrop, false);
+	add.addEventListener('dragleave', addDragLeave, false);
 	
 	for(var i = 0; i < commandblocks.length; i++) {
-		$(commandblocks[i]).on('dragstart', toolboxDragStart);
+		commandblocks[i].addEventListener('dragstart', toolboxDragStart, false);
 	}
-	console.log("registered event handlers for the command blocks");
-	
-	console.log("everything initialized, starting the tutorial");
 	
 	introJs().start();
 });
