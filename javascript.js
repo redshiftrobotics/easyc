@@ -34,15 +34,18 @@ $("#tutorial").click(function() {
 });
 
 function getMotorValues(id) {
-  for (var i=0; i<motors.length;i++) {
-    if (motors[i].motorId === id) {
-      if (isNaN(motors[i].port) || isNaN(motors[i].daisy) || isNaN(motors[i].number)) {
-        alert("Motor "+id+" is used, but is not configured correctly!");
-        return null;
-      } 
-      return motors[i];
-    }
-  }
+	for (var i=0; i<motors.length;i++) {
+		if (motors[i].motorId === id) {
+			if (isNaN(motors[i].port)
+			    || isNaN(motors[i].daisy)
+			    || isNaN(motors[i].number))
+			{
+				alert("Motor "+id+" is used, but is not configured correctly!");
+				return null;
+			} 
+			return motors[i];
+		}
+	}
 }
 
 function addSleep(time) 
@@ -186,7 +189,22 @@ function parseProgram() {
           BuildSuccess = false;
         }
       break;
-
+	
+	case "stop-all-motors":
+		var str = "";
+		for (var port = 1; port <= 4; port++) {
+			for (var daisychain = 1; daisychain <= 4; daisychain++) {
+				for (var motor = 1; motor <= 2; motor++) {
+					str += "I2C_SetMotorSpeed(S" + port + ", " + daisychain + ", " + motor + ", 0);\n";
+				}
+				for (var servo = 1; servo <= 6; servo++) {
+					str += "I2C_SetServoSpeed(S" + port + ", " + daisychain + ", " + servo + ", 0);\n";
+				}
+			}
+		}
+		alert(str);
+		programString += str;
+		break;
       default:
       break;
     }
@@ -357,10 +375,25 @@ function addDragLeave(e) {
 
 $("document").ready(function() 
 {
-  if (isIE())
-  {
-    alert("ie");
-  }
+  $("body").on("mouseover","#workbench .command",function(e) {
+    //console.log(e);
+    var hoveredE = e.currentTarget;
+    $(hoveredE).css("background","#aaaaaa");
+    $(document).keydown(function(e) {
+    console.log(e);
+      if ((e.keyCode == "8" || e.keyCode == "46") && (e.target.nodeName != "INPUT"))
+      {
+        hoveredE.remove();
+      }
+    });
+  });
+  
+  $("body").on("mouseleave","#workbench .command",function(e) {
+    $(document).unbind("keydown");
+    $(e.currentTarget).css("background","#cccccc");
+  });
+
+
   var trashElement = document.getElementById("trash");
   var add = document.getElementById("add");
   var commandblocks = $('.command');
