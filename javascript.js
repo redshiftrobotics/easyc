@@ -29,6 +29,10 @@ $("#compile").click(function() {
   parseProgram();
 });
 
+$("#tutorial").click(function() {
+  introJs().start();
+});
+
 function getMotorValues(id) {
   for (var i=0; i<motors.length;i++) {
     if (motors[i].motorId === id) {
@@ -246,6 +250,10 @@ function addDrop(e) {
   if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
   {
     var NewNode = dragSrcEl.cloneNode(true);
+    var Parent = document.getElementById("workbench");
+    Parent.insertBefore(NewNode, document.getElementById("add"));
+
+    
 
     // var Inputs = dragSrcEl.querySelectorAll("input");
 
@@ -253,11 +261,12 @@ function addDrop(e) {
     //   alert("input");
     // });
 
-    document.getElementById("workbench").appendChild(NewNode);
+    //document.getElementById("workbench").appendChild(NewNode);
 
     NewNode.addEventListener('dragstart', programDragStart, false);
     NewNode.addEventListener('dragover', programDragOver, false);
     NewNode.addEventListener('drop', programDrop, false);
+    NewNode.addEventListener('dragleave', programDragLeave, false);
   }
 
   return false;
@@ -265,7 +274,19 @@ function addDrop(e) {
 
 function programDragStart(e) 
 {
+  //copies value attributes to the inner html so they can be read and copied
+  $("input").each(function(index, data) 
+  {
+     var Value = $(this).val();
+
+     $(this).attr("value", Value);
+  });
+
+
   dragSrcEl = this;
+
+
+
   e.dataTransfer.effectAllowed = "move";
   e.dataTransfer.setData('text/html', this.innerHTML)
   return false;
@@ -273,6 +294,8 @@ function programDragStart(e)
 
 function programDrop(e)
 {
+  $(this).removeClass("selected");
+
   if (e.stopPropagation) 
   {
     e.stopPropagation(); // Stops some browsers from redirecting.
@@ -286,8 +309,17 @@ function programDrop(e)
   }
 }
 
+function programDragLeave(e)
+{
+  $(this).removeClass("selected");
+}
+
 function programDragOver(e) 
 {
+  if(dragSrcEl != this && dragSrcEl.parentNode.id == "workbench")
+  {
+    $(this).addClass("selected");
+  }
 
   if (e.preventDefault) 
   {
@@ -319,11 +351,30 @@ function addDragLeave(e) {
   return false;
 }
 
-var trashElement = $("#trash");
-var add = $("#workbench");
-var commandblocks = $('.command');
-
 $("document").ready(function() {
+
+  $("input").keypress(function(event)
+  {
+
+
+    // $(event.target).attr("value", $(event.target).val());
+    // alert($(event.target).val());
+
+    // var InputLength = $("input").length;
+    // for(i = 0; i < InputLength; i++)
+    // {
+    //   alert($("input")[i]);
+    //   $("input")[i].attr({value: $("input")[i].val()});
+    // }
+  });
+
+
+
+
+  var trashElement = $("#trash");
+  var add = $("#add");
+  var commandblocks = $('.command');
+
 	console.log("app init");
 
 	// download the libraries

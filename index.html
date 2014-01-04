@@ -10,7 +10,8 @@
 	<body>
 		<div class="global-header">
 			<div class="title">Welcome to EasyC!</div>
-			<div data-step="4" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</div>
+			<div data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</div>
+			<div data-step="4" class = "header-button" data-intro="Press this button to review the tutorial." id="tutorial">Tutorial</div>
 		</div>
 		<div class="content">
 			<div data-step="1" data-position="bottom" data-intro="Welcome to EasyC! You can use EasyC to create an autonomous program for your robot, even if you don't know how to use RobotC.<br /><br />Your first step is to input information about the motors and servos on your robot. For example, if you have a motor controller directly attached to port 1 on the NXT, and a motor wired to motor 2, you would put 1 in the port field, 1 in the daisychain field, and 2 in the motor field." id="motor-config" class="config-bar">
@@ -128,10 +129,11 @@
 				</div>
 			</div>
 			<div data-step="2" data-intro="This is the workbench. Drag blocks from the toolbox into this space to create your program. You can input command values in either the toolbox or the workbench." class="panel-right droppable">
-				<h2 id="workbench-title" >Workbench: (Drop Here)</h2>
+				<h2 id="workbench-title" >Workbench:</h2>
 				<div id="workbench">
+					<h1 id = "add">Drop</h1>
 				</div>
-				<img src="images/EasyCConfig.svg">
+				<img src="images/EasyCConfig.svg"/>
 			</div>
 		</div>
 		<script type="text/javascript" src="ajax.js"></script>
