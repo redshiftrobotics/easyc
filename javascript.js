@@ -207,7 +207,7 @@ function toolboxDragStart(e) {
 }
 
 function trashDrop(e) {
-    console.log("trash drop event fired");
+  console.log("trash drop event fired");
   if(dragSrcEl.parentNode.getAttribute('id') == "workbench")
   {
   $(this).removeClass('selected');
@@ -336,14 +336,17 @@ $("document").ready(function() {
 	trashElement.on('dragover', trashDragOver);
 	trashElement.on('drop', trashDrop);
 	trashElement.on('dragleave', trashDragLeave);
+	console.log("registered event handlers for the trash can");
 	
 	add.on('dragover', addDragOver);
 	add.on('drop', addDrop);
 	add.on('dragleave', addDragLeave);
+	console.log("registered event handlers for the workbench");
 	
 	for(var i = 0; i < commandblocks.length; i++) {
 		$(commandblocks[i]).on('dragstart', toolboxDragStart);
 	}
+	console.log("registered event handlers for the command blocks");
 	
 	console.log("everything initialized, starting the tutorial");
 	
