@@ -13,7 +13,7 @@
 			<div data-step="4" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</div>
 		</div>
 		<div class="content">
-			<div data-step="1" data-intro="Welcome to EasyC! You can use EasyC to create an autonomous program for your robot, even if you don't know how to use RobotC.<br /><br />Your first step is to input information about the motors and servos on your robot. For example, if you have a motor controller directly attached to port 1 on the NXT, and a motor wired to motor 2, you would put 1 in the port field, 1 in the daisychain field, and 2 in the motor field." id="motor-config" class="config-bar">
+			<div data-step="1" data-position="bottom" data-intro="Welcome to EasyC! You can use EasyC to create an autonomous program for your robot, even if you don't know how to use RobotC.<br /><br />Your first step is to input information about the motors and servos on your robot. For example, if you have a motor controller directly attached to port 1 on the NXT, and a motor wired to motor 2, you would put 1 in the port field, 1 in the daisychain field, and 2 in the motor field." id="motor-config" class="config-bar">
 				<h2 class="title">Motor/Servo Config:</h2>
 				<div class="command" id="motor-id-1">
 					<div class="title">ID: 1</div>
@@ -99,23 +99,23 @@
 					<div class="command draggable" draggable="true" command-type="motor-speed">
 						<div class="title">Motor Speed</div>
 						<div class="input-text">MotorID: </div>
-						<input class="motor-id" placeholder="Motor ID"/>
+						<select class="motor-id"> <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
 						<div class="input-text">Speed: </div>
-						<input class="speed-value" placeholder="(0-100)"/>
+						<input class="speed-value" placeholder="(-100,100)"/>
 					</div>
 					<div class="command draggable" draggable="true" command-type="motor-rotations">
 						<div class="title">Motor Rotations</div>
 						<div class="input-text">MotorID: </div>
-						<input class="motor-id" placeholder="Motor ID"/>
+						<select class="motor-id"> <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
 						<div class="input-text">Rotations: </div>
 						<input class="rotation-value" placeholder="# of rotations"/>
 						<div class="input-text">Speed: </div>
-						<input class="speed-value" placeholder="(0-100)"/>
+						<input class="speed-value" placeholder="(-100,100)"/>
 					</div>
 					<div class="command draggable" draggable="true" command-type="move-servo">
 						<div class="title">Move Servo</div>
-						<div class="input-text">MotorID: </div>
-						<input class="motor-id" placeholder="Motor ID"/>
+						<div class="input-text">ServoID: </div>
+						<select class="motor-id"> <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
 						<div class="input-text">Value: </div>
 						<input class="position-value" placeholder="(0-256)"/>
 					</div>
@@ -131,6 +131,7 @@
 				<h2 id="workbench-title" >Workbench: (Drop Here)</h2>
 				<div id="workbench">
 				</div>
+				<img src="images/EasyCConfig.svg">
 			</div>
 		</div>
 		<script type="text/javascript" src="ajax.js"></script>
