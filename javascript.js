@@ -300,7 +300,12 @@ function programDragStart(e)
   $("input").each(function(index, data) 
   {
      var Value = $(this).val();
+     $(this).attr("value", Value);
+  });
 
+  $("select").each(function(index, data) 
+  {
+     var Value = this.value;
      $(this).attr("value", Value);
   });
 
@@ -329,6 +334,12 @@ function programDrop(e)
     dragSrcEl.innerHTML = this.innerHTML;
     this.innerHTML = e.dataTransfer.getData('text/html');
   }
+
+  $("select").each(function(index, data) 
+  {
+     var Value = $(this).attr("value");
+     this.value = Value;
+  });
 }
 
 function programDragLeave(e)
