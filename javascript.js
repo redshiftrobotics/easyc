@@ -30,15 +30,18 @@ $("#compile").click(function() {
 });
 
 function getMotorValues(id) {
-  for (var i=0; i<motors.length;i++) {
-    if (motors[i].motorId === id) {
-      if (isNaN(motors[i].port) || isNaN(motors[i].daisy) || isNaN(motors[i].number)) {
-        alert("Motor "+id+" is used, but is not configured correctly!");
-        return null;
-      } 
-      return motors[i];
-    }
-  }
+	for (var i=0; i<motors.length;i++) {
+		if (motors[i].motorId === id) {
+			if (isNaN(motors[i].port)
+			    || isNaN(motors[i].daisy)
+			    || isNaN(motors[i].number))
+			{
+				alert("Motor "+id+" is used, but is not configured correctly!");
+				return null;
+			} 
+			return motors[i];
+		}
+	}
 }
 
 function addSleep(time) 
@@ -182,7 +185,22 @@ function parseProgram() {
           BuildSuccess = false;
         }
       break;
-
+	
+	case "stop-all-motors":
+		var str = "";
+		for (var port = 1; port <= 4; port++) {
+			for (var daisychain = 1; daisychain <= 4; daisychain++) {
+				for (var motor = 1; motor <= 2; motor++) {
+					str += "I2C_SetMotorSpeed(S" + port + ", " + daisychain + ", " + motor + ", 0);\n";
+				}
+				for (var servo = 1; servo <= 6; servo++) {
+					str += "I2C_SetServoSpeed(S" + port + ", " + daisychain + ", " + servo + ", 0);\n";
+				}
+			}
+		}
+		alert(str);
+		programString += str;
+		break;
       default:
       break;
     }
