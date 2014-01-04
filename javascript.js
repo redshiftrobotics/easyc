@@ -369,7 +369,23 @@ $("document").ready(function() {
   });
 
 
-
+  $("body").on("mouseover","#workbench .command",function(e) {
+    //console.log(e);
+    var hoveredE = e.currentTarget;
+    $(hoveredE).css("background","#aaaaaa");
+    $(document).keydown(function(e) {
+    console.log(e);
+      if ((e.keyCode == "8" || e.keyCode == "46") && (e.target.nodeName != "INPUT"))
+      {
+        hoveredE.remove();
+      }
+    });
+  });
+  
+  $("body").on("mouseleave","#workbench .command",function(e) {
+    $(document).unbind("keydown");
+    $(e.currentTarget).css("background","#cccccc");
+  });
 
   var trashElement = $("#trash");
   var add = $("#add");
