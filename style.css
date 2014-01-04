@@ -83,15 +83,20 @@
   color: #ffffff;
 }
 
-.global-header #compile {
+.global-header .header-button {
   float: right;
-  margin-right: 100px;
+  margin-right: 10px;
   background: rgba(255,255,255,.8);
   line-height: 30px;
   margin-top: 5px;
   padding: 0 5px 0 5px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.dragging
+{
+  opacity: .4;
 }
 
 .config-bar {
