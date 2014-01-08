@@ -6,7 +6,7 @@ console.log = function(){void()};
 
 function getMotorConfig()
 {
-  motors = [];
+  var motors = [];
   var motorConfigs = $("#motor-config").children(".command");
   for(i = 0; i < motorConfigs.length; i++)
   {
@@ -24,12 +24,20 @@ function getMotorConfig()
   }
 }
 
-$("#compile").click(function() {
+$("#clear").click(function() 
+{
+  $("#workbench").children().remove();
+  $("#workbench").add('<h1 id = "add">Drop Here</h1>');
+});
+
+$("#compile").click(function() 
+{
   getMotorConfig();
   parseProgram();
 });
 
-$("#tutorial").click(function() {
+$("#tutorial").click(function() 
+{
   introJs().start();
 });
 
@@ -40,7 +48,7 @@ function getMotorValues(id) {
 			    || isNaN(motors[i].daisy)
 			    || isNaN(motors[i].number))
 			{
-				alert("Motor "+id+" is used, but is not configured correctly!");
+				alert("Motor " + id + " is used, but is not configured correctly!");
 				return null;
 			} 
 			return motors[i];
@@ -50,30 +58,30 @@ function getMotorValues(id) {
 
 function addSleep(time) 
 {
-  programString += "Sleep("+time*1000+");";
+  programString += "Sleep("+time*1000+");\n";
 }
 
 function addMotorSpeed(motorId, speed) 
 {
   var motor = getMotorValues(motorId);
-  programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");";
+  programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
 }
 
 function addMotorRotation(motorId, rotations, speed) 
 {
   var motor = getMotorValues(motorId);
-  programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");";
+  programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");\n";
 }
 
 function addMoveServo(motorId, position) 
 {
   var motor = getMotorValues(motorId);
-  programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");";
+  programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");\n";
 }
 
 function validateValues(blockname, values) 
 {
-  if (blockname=="sleep") 
+  if (blockname == "sleep") 
   {
     if (isNaN(values.sleep) || values.sleep < 0) 
     {
@@ -107,7 +115,7 @@ function validateValues(blockname, values)
     }
   }
   if (blockname=="motor-servo") {
-    if (isNaN(values.position) || values.position < 0 || values.position > 256) 
+    if (isNaN(values.position) || values.position < 0 || values.position > 255) 
     {
       alert("Command: "+blockname+" has an invalid position number (0-256 integers allowed)");
       return false;
@@ -265,16 +273,6 @@ function addDrop(e) {
     var NewNode = dragSrcEl.cloneNode(true);
     var Parent = document.getElementById("workbench");
     Parent.insertBefore(NewNode, document.getElementById("add"));
-
-    
-
-    // var Inputs = dragSrcEl.querySelectorAll("input");
-
-    // [].forEach.call(Inputs, function(Input) {
-    //   alert("input");
-    // });
-
-    //document.getElementById("workbench").appendChild(NewNode);
 
     NewNode.addEventListener('dragstart', programDragStart, false);
     NewNode.addEventListener('dragover', programDragOver, false);

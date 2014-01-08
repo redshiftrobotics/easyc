@@ -1,4 +1,2 @@
 -make drop here button formatted and make it center
 -add clear all button
--newline characters after each line of code which is compiled
--servo upper limit becomes 255
