@@ -101,28 +101,18 @@
 
 .config-bar {
   float: left;
-  position: relative;
-  display: block;
   width: 100%;
   border-bottom: dashed 2px #000000;
   margin-bottom: 5px;
 }
 
-.config-bar .title {
-  float: left;
-}
-
 .content {
-  float: left;
-  position: relative;
-  display: block;
   margin-top: 40px;
   padding-top: 10px;
   width: 100%;
 }
 
 .panel-left {
-  display: inline-block;
   float: left;
   width: 30%;
   margin-right: 15px;
@@ -149,10 +139,6 @@
   min-height: 400px;
   width: 100%;
   background: #DFDFDF;
-}
-
-.trash-bar {
-  float: left;
 }
 
 .program-window {

@@ -8,12 +8,15 @@
 		<script src="js/intro.min.js"></script>
 	</head>
 	<body>
-		<div class="global-header">
-			<div class="title">Welcome to EasyC!</div>
-			<div data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</div>
-			<div class = "header-button" data-intro="Press this button to review the tutorial." id="tutorial">Tutorial</div>
-			<div class = "header-button" data-intro="Press this button to clear the program." id="clear">Clear</div>
-		</div>
+		<header class="global-header">
+			<h2 class="title">Welcome to EasyC!</h2>
+				<div id="header-buttons">
+					<button data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</button>
+					<button data-step="6" class = "header-button" data-intro="Press this button to review the tutorial." id="tutorial">Tutorial</button>
+				<div class = "header-button" data-step="5" data-intro="Press this button to clear the program." id="clear">Clear</div>
+				</div>
+		</header>
+>>>>>>> various cleanups
 		<div class="content">
 			<div data-step="1" data-position="bottom" data-intro="Welcome to EasyC! You can use EasyC to create an autonomous program for your robot, even if you don't know how to use RobotC.<br /><br />Your first step is to input information about the motors and servos on your robot. For example, if you have a motor controller directly attached to port 1 on the NXT, and a motor wired to motor 2, you would put 1 in the port field, 1 in the daisychain field, and 2 in the motor field." id="motor-config" class="config-bar">
 				<h2 class="title">Motor/Servo Config:</h2>
