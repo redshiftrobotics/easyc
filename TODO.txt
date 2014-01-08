@@ -1,2 +1,1 @@
 -make drop here button formatted and make it center
--add clear all button
