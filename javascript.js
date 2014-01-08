@@ -27,7 +27,7 @@ function getMotorConfig()
 $("#clear").click(function() 
 {
   $("#workbench").children().remove();
-  $("#workbench").add('<h1 id = "add">Drop Here</h1>');
+  $("#workbench").append('<h1 id = "add">Drop Here</h1>');
 });
 
 $("#compile").click(function() 
