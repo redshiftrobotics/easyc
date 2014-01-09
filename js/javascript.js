@@ -3,11 +3,14 @@
 _console_log = console.log;
 console.log = function(){void()};
 */
+var motors;
+var programString;
 
 function getMotorConfig()
 {
-  var motors = [];
+  motors = [];
   var motorConfigs = $("#motor-config").children(".command");
+
   for(i = 0; i < motorConfigs.length; i++)
   {
     var current = $(motorConfigs[i]);
@@ -90,7 +93,7 @@ function validateValues(blockname, values)
   }
   if (blockname=="motor-speed" || blockname=="motor-rotations" || blockname=="move-servo") 
   {
-    if (isNaN(values.motorId) || values.motorId >= window.motors.length) 
+    if (isNaN(values.motorId) || values.motorId >= motors.length) 
     {
       alert("Command: "+blockname+" has an invalid motorId");
       return false;
@@ -125,16 +128,18 @@ function validateValues(blockname, values)
 
 function parseProgram() {
   programString = programheader;
-  programString += "task main(){";
+  programString += "task main()\n{\n";
   
   var BuildSuccess = true;
 
   var elementList = $("#workbench").children();
+
   elementList.each(function() {
     var command = $(this);
     switch (command.attr("command-type")) {
+
       case "sleep":
-        var sleepTime = parseFloat(command.children(".sleep-value")[0].value);
+        var sleepTime = parseFloat($(command).children(".sleep-value")[0].value);
         var values = {
           sleep: sleepTime
         };
@@ -319,6 +324,10 @@ function programDrop(e)
     // Set the source column's HTML to the HTML of the column we dropped on.
   if(dragSrcEl != this && dragSrcEl.parentNode.id == "workbench")
   {
+    $(document).unbind("keydown");
+    $(this).css("background","#cccccc");
+    $(dragSrcEl).css("background","#cccccc");
+
     dragSrcEl.innerHTML = this.innerHTML;
     this.innerHTML = e.dataTransfer.getData('text/html');
   }
@@ -374,8 +383,7 @@ function addDragLeave(e) {
 
 $("document").ready(function() 
 {
-  $("body").on("mouseover","#workbench .command",function(e) {
-    //console.log(e);
+  $("body").on("mouseover","#workbench .command", function(e) {
     var hoveredE = e.currentTarget;
     $(hoveredE).css("background","#aaaaaa");
     $(document).keydown(function(e) {
@@ -387,7 +395,7 @@ $("document").ready(function()
     });
   });
   
-  $("body").on("mouseleave","#workbench .command",function(e) {
+  $("body").on("mouseleave","#workbench .command", function(e) {
     $(document).unbind("keydown");
     $(e.currentTarget).css("background","#cccccc");
   });
