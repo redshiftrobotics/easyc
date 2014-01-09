@@ -9,6 +9,20 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
+
+/*input
+{
+    background: white;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #DDD inset;
+    color: #666;
+    float: left;
+    padding: 5px 10px;
+    width: 165px;
+    outline: none;
+}*/
+
 .command {
   height: 150px;
   width: 150px;
