@@ -9,7 +9,6 @@
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-
 /*input
 {
     background: white;
@@ -42,6 +41,7 @@
 .command input {
   width: 80%;
 }
+
 .command .title {
   font-weight: bold;
   text-decoration: underline;
@@ -66,8 +66,6 @@
   -webkit-box-shadow: inset 0 0 3px #000;
   -ms-box-shadow: inset 0 0 3px #000;
   box-shadow: inset 0 0 3px #000;
-  text-align: center;
-  cursor: move;
 }
 
 .selected {
@@ -98,7 +96,6 @@
   float: right;
   margin-right: 10px;
   background: rgba(255,255,255,.8);
-  line-height: 30px;
   margin-top: 5px;
   padding: 0 5px 0 5px;
   font-weight: bold;
@@ -111,29 +108,17 @@
 }
 
 .config-bar {
-  float: left;
-  position: relative;
-  display: block;
   width: 100%;
-  border-bottom: dashed 2px #000000;
   margin-bottom: 5px;
 }
 
-.config-bar .title {
-  float: left;
-}
-
 .content {
-  float: left;
-  position: relative;
-  display: block;
   margin-top: 40px;
   padding-top: 10px;
   width: 100%;
 }
 
 .panel-left {
-  display: inline-block;
   float: left;
   width: 30%;
   margin-right: 15px;
@@ -160,10 +145,6 @@
   min-height: 400px;
   width: 100%;
   background: #DFDFDF;
-}
-
-.trash-bar {
-  float: left;
 }
 
 .program-window {
