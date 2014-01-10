@@ -1,41 +1,66 @@
 
 /* Prevent the text contents of draggable elements from being selectable. */
-[draggable] {
+[draggable] 
+{
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+
   /* Required to make elements draggable in old WebKit */
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-/*input
+
+h1, h2, h3, h4, h5
 {
-    background: white;
-    border: 1px solid #DDD;
+  color: rgb(40, 40, 40);
+  text-shadow:2px 2px .2em rgb(120, 120, 120);
+  text-align: center;
+  font-family:"governor", Sans-Serif;
+}
+
+input, select
+{
     border-radius: 5px;
-    box-shadow: 0 0 5px #DDD inset;
-    color: #666;
-    float: left;
-    padding: 5px 10px;
-    width: 165px;
-    outline: none;
-}*/
+    border: 1px solid #666666;
+}
+
+body
+{
+  float: left;
+}
+
+
 
 .command
 {
   border: 1px solid #666666;
   height: 150px;
   width: 150px;
-  box-shadow: 10px 10px 100px #888888;
+  box-shadow: 10px 10px 10px #888888;
   background-color: #ccc;
   border-radius: 10px;
   text-align: center;
   margin-right: 5px;
   margin-bottom: 5px;
   cursor: move;
-  display: inline-block;
-  /*float: left;*/
+  float: left;
+}
+
+#add
+{
+  border: 1px solid #666666;
+  height: 150px;
+  width: 150px;
+  box-shadow: 10px 10px 10px #888888;
+  background-color: #ccc;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  cursor: move;
+  float: left;
 }
 
 .command input {
@@ -56,21 +81,16 @@
   height: 150px;
   width: 150px;
   float: left;
-  border: 2px solid #666666;
   background: url(http://icons.iconarchive.com/icons/iconshock/vista-general/128/trash-icon.png) no-repeat 50% 50%;
   margin-right: 5px;
-  -webkit-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -moz-border-radius: 10px;
+  border: 1px solid #666666;
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 3px #000;
-  -ms-box-shadow: inset 0 0 3px #000;
-  box-shadow: inset 0 0 3px #000;
+  box-shadow: 10px 10px 10px #888888;
 }
 
 .selected {
   border-style: dashed;
-  border-width:5px;
+  color: blue;
 }
 
 .global-header {
@@ -144,7 +164,7 @@
   float: left;
   min-height: 400px;
   width: 100%;
-  background: #DFDFDF;
+  /*background: #DFDFDF;*/
 }
 
 .program-window {

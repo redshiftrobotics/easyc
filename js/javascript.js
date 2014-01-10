@@ -236,10 +236,9 @@ function toolboxDragStart(e)
 
 function trashDrop(e) 
 {
-  console.log("trash drop event fired");
   if(dragSrcEl.parentNode.getAttribute('id') == "workbench")
   {
-  $(this).removeClass('selected');
+    $(this).removeClass("selected");
     dragSrcEl.remove();
   }
   if (e.stopPropagation) {
@@ -249,8 +248,8 @@ function trashDrop(e)
 }
 
 function trashDragOver(e) {
-  console.log("trash drag over event fired");
-  $(this).addClass('selected');
+  $(this).addClass("selected");
+
   if (e.preventDefault) {
   e.preventDefault(); // Necessary. Allows us to drop.
   }
@@ -260,30 +259,7 @@ function trashDragOver(e) {
 }
 
 function trashDragLeave(e){
-  console.log("trash drag leave event fired");
   $(this).removeClass('selected');
-  return false;
-}
-
-function addDrop(e) {
-  console.log("add drop event fired");
-  this.classList.remove('selected');
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-
-  if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
-  {
-    var NewNode = dragSrcEl.cloneNode(true);
-    var Parent = document.getElementById("workbench");
-    Parent.insertBefore(NewNode, document.getElementById("add"));
-
-    NewNode.addEventListener('dragstart', programDragStart, false);
-    NewNode.addEventListener('dragover', programDragOver, false);
-    NewNode.addEventListener('drop', programDrop, false);
-    NewNode.addEventListener('dragleave', programDragLeave, false);
-  }
-
   return false;
 }
 
@@ -302,11 +278,7 @@ function programDragStart(e)
      $(this).attr("value", Value);
   });
 
-
   dragSrcEl = this;
-
-
-
   e.dataTransfer.effectAllowed = "move";
   e.dataTransfer.setData('text/html', this.innerHTML);
   return false;
@@ -361,11 +333,31 @@ function programDragOver(e)
   return false;
 }
 
-function addDragOver(e) {
-  console.log("add drag over event fired");
+function addDrop(e) {
+  $(this).removeClass("selected");
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
   if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
   {
-    $(this).addClass('selected');
+    var NewNode = dragSrcEl.cloneNode(true);
+    var Parent = document.getElementById("workbench");
+    Parent.insertBefore(NewNode, document.getElementById("add"));
+
+    NewNode.addEventListener('dragstart', programDragStart, false);
+    NewNode.addEventListener('dragover', programDragOver, false);
+    NewNode.addEventListener('drop', programDrop, false);
+    NewNode.addEventListener('dragleave', programDragLeave, false);
+  }
+
+  return false;
+}
+
+function addDragOver(e) {
+  if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
+  {
+    $(this).addClass("selected");
   }
 
   if (e.preventDefault) 
