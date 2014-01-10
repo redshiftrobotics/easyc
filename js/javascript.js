@@ -248,7 +248,10 @@ function trashDrop(e)
 }
 
 function trashDragOver(e) {
-  $(this).addClass("selected");
+  if(dragSrcEl.parentNode.id == "workbench")
+  {
+    $(this).addClass("selected");
+  }
 
   if (e.preventDefault) {
   e.preventDefault(); // Necessary. Allows us to drop.
