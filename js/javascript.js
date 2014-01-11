@@ -205,7 +205,7 @@ function parseProgram() {
 	case "stop-all-motors":
 		var str = "";
 		str += "Servos_StopAll();\n"
-		str += "Motors_StopAll();\n"
+		str += "Motors_StopAllMotors();\n"
 		programString += str;
 		break;
       default:
