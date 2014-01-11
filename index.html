@@ -4,17 +4,19 @@
 		<title>EasyC | SAAS Robotics </title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/introjs.min.css">
-		<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
+		<link rel="stylesheet" type="text/css" href="css/button.css">
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="js/intro.min.js"></script>
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<meta name="viewport" content="width=device-width" />
 	</head>
 	<body>
 		<header class="global-header">
 			<h2 class="title">Welcome to EasyC!</h2>
 				<div id="header-buttons">
-					<a data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</a>
-					<a data-step="6" class = "header-button" data-intro="Press this button to review the tutorial." id="tutorial">Tutorial</a>
-					<a class = "header-button" data-step="5" data-intro="Press this button to clear the program." id="clear">Clear</a>
+					<button data-step="4" class = "header-button" data-intro="When you're ready to use your program press this button to generate its text." id="compile">Compile</button>
+					<button data-step="6" class = "header-button" data-intro="Press this button to review the tutorial." id="tutorial">Tutorial</button>
+					<button class = "header-button" data-step="5" data-intro="Press this button to clear the program." id="clear">Clear</button>
 				</div>
 		</header>
 		<div class="content">
@@ -127,7 +129,7 @@
 					<div class="command draggable" draggable="true" command-type="stop-all-motors">
 						<div class="title">Stop all electrical components</div>
 					</div>
-					<div id="trash">Trash</div>
+					<div id="trash"></div>
 				</div>
 				<div data-step="5" data-intro="This is where your program will appear when you hit the compile button. All you need to do is copy this text, paste it into RobotC, and download the program to the robot." class="program-window">
 					<h2>Program: (Copy below)</h2>

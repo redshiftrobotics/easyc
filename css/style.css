@@ -1,6 +1,6 @@
 
 /* Prevent the text contents of draggable elements from being selectable. */
-[draggable] 
+[command] 
 {
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -10,6 +10,11 @@
   /* Required to make elements draggable in old WebKit */
   -khtml-user-drag: element;
   -webkit-user-drag: element;
+}
+
+.selected 
+{
+  border-style: dashed !important;
 }
 
 h1, h2, h3, h4, h5
@@ -60,7 +65,8 @@ body
   margin-right: 5px;
   margin-bottom: 5px;
   cursor: move;
-  float: left;
+  display: inline-block;
+  /*float: left;*/
 }
 
 .command input {
@@ -69,7 +75,6 @@ body
 
 .command .title {
   font-weight: bold;
-  text-decoration: underline;
   margin-bottom: 3px;
   display: block;
 }
@@ -78,6 +83,8 @@ body
 }
 
 #trash {
+  font-weight: bold;
+  text-align: center;
   height: 150px;
   width: 150px;
   float: left;
@@ -86,11 +93,6 @@ body
   border: 1px solid #666666;
   border-radius: 10px;
   box-shadow: 10px 10px 10px #888888;
-}
-
-.selected {
-  border-style: dashed;
-  color: blue;
 }
 
 .global-header {
@@ -112,15 +114,16 @@ body
   color: #ffffff;
 }
 
-.global-header .header-button {
+/*.global-header .header-button{
+  height: 100%;
   float: right;
   margin-right: 10px;
   background: rgba(255,255,255,.8);
   margin-top: 5px;
-  padding: 0 5px 0 5px;
+  /*padding: 0 5px 0 5px;*/
   font-weight: bold;
   cursor: pointer;
-}
+}*/
 
 .dragging
 {
@@ -128,6 +131,7 @@ body
 }
 
 .config-bar {
+  float: left;
   width: 100%;
   margin-bottom: 5px;
 }
@@ -147,8 +151,8 @@ body
 .toolbox {
   padding: 5px 5px 0 5px;
   float: left;
-  border: solid 2px;
-  border-radius: 6px;
+  /*border: solid 2px;*/
+  /*border-radius: 6px;*/
   width: 100%;
 }
 
@@ -156,8 +160,8 @@ body
   display: inline-block;
   float: right;
   width: 65%;
-  border: solid 2px;
-  border-radius: 6px;
+  /*border: solid 2px;*/
+  /*border-radius: 6px;*/
 }
 
 #workbench {
@@ -171,8 +175,8 @@ body
   float: left;
   width: 100%;
   text-align: left;
-  border: solid 2px;
-  border-radius: 6px;
+  /*border: solid 2px;*/
+  /*border-radius: 6px;*/
   margin-top: 5px;
   padding: 5px;
 }
