@@ -153,8 +153,8 @@ function parseProgram() {
       break;
 
       case "motor-speed":
-        var motorId = parseInt(command.children(".motor-id")[0].value);
-        var speed = parseInt(command.children(".speed-value")[0].value);
+        var motorId = parseInt($(command).children(".motor-id")[0].value);
+        var speed = parseInt($(command).children(".speed-value")[0].value);
         var values = {
           motorId: motorId,
           speed: speed
@@ -169,9 +169,9 @@ function parseProgram() {
       break;
 
       case "motor-rotations":
-        var motorId = parseInt(command.children(".motor-id")[0].value);
-        var speed = parseInt(command.children(".speed-value")[0].value);
-        var rotations = parseFloat(command.children(".rotation-value")[0].value);
+        var motorId = parseInt($(command).children(".motor-id")[0].value);
+        var speed = parseInt($(command).children(".speed-value")[0].value);
+        var rotations = parseFloat($(command).children(".rotation-value")[0].value);
         var values = {
           motorId: motorId,
           speed: speed,
@@ -187,8 +187,8 @@ function parseProgram() {
       break;
 
       case "move-servo":
-        var motorId = parseInt(command.children(".motor-id")[0].value);
-        var position = parseInt(command.children(".position-value")[0].value);
+        var motorId = parseInt($(command).children(".motor-id")[0].value);
+        var position = parseInt($(command).children(".position-value")[0].value);
         var values = {
           motorId: motorId,
           position: position
