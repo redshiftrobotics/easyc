@@ -43,6 +43,11 @@ $("#tutorial").click(function()
   introJs().start();
 });
 
+$("#robotc-download").click(function() 
+{
+  window.location = "http://www.robotc.net/files/ROBOTCforMINDSTORMS_362.exe";
+});
+
 function getMotorValues(id) {
 	for (var i=0; i<motors.length;i++) {
 		if (motors[i].motorId === id) {

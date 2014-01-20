@@ -1,0 +1,40 @@
+button
+{
+	height: 30px;
+	/*line-height: 40px;*/
+	/*width: 100px;*/
+	text-align: center;
+	border-radius: 7px;
+	border: 1px solid rgb(0, 0, 0);
+
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+
+	float: right;
+}
+
+button:hover
+{
+	background-color: #cccccc;
+}
+
+h1, h2, h3, h4, h5
+{
+  color: rgb(40, 40, 40);
+  text-shadow:2px 2px .2em rgb(120, 120, 120);
+  text-align: center;
+  font-family:"governor", Sans-Serif;
+}
+
+input, select
+{
+  border-radius: 5px;
+  border: 1px solid #666666;
+}
+
+body
+{
+  float: left;
+}
