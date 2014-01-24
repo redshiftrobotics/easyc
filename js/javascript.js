@@ -144,73 +144,73 @@ function parseProgram() {
     switch (command.attr("command-type")) {
 
       case "sleep":
-        var sleepTime = parseFloat($(command).children(".sleep-value")[0].value);
-        var values = {
-          sleep: sleepTime
-        };
-        if (validateValues("sleep",values)) {
-          addSleep(sleepTime);
-        }
-        else
-        {
-          BuildSuccess = false;
-        }
+	var sleepTime = parseFloat($(command).children(".sleep-value")[0].value);
+	var values = {
+	  sleep: sleepTime
+	};
+	if (validateValues("sleep",values)) {
+	  addSleep(sleepTime);
+	}
+	else
+	{
+	  BuildSuccess = false;
+	}
       break;
 
       case "motor-speed":
-        var motorId = parseInt($(command).children(".motor-id")[0].value);
-        var speed = parseInt($(command).children(".speed-value")[0].value);
-        var values = {
-          motorId: motorId,
-          speed: speed
-        };
-        if (validateValues("motor-speed",values)) {
-          addMotorSpeed(motorId, speed);
-        }
-        else
-        {
-          BuildSuccess = false;
-        }
+	var motorId = parseInt($(command).children(".motor-id")[0].value);
+	var speed = parseInt($(command).children(".speed-value")[0].value);
+	var values = {
+	  motorId: motorId,
+	  speed: speed
+	};
+	if (validateValues("motor-speed",values)) {
+	  addMotorSpeed(motorId, speed);
+	}
+	else
+	{
+	  BuildSuccess = false;
+	}
       break;
 
       case "motor-rotations":
-        var motorId = parseInt($(command).children(".motor-id")[0].value);
-        var speed = parseInt($(command).children(".speed-value")[0].value);
-        var rotations = parseFloat($(command).children(".rotation-value")[0].value);
-        var values = {
-          motorId: motorId,
-          speed: speed,
-          rotations: rotations
-        };
-        if (validateValues("motor-rotations", values)) {
-          addMotorRotation(motorId, rotations, speed);
-        }
-        else
-        {
-          BuildSuccess = false;
-        }
+	var motorId = parseInt($(command).children(".motor-id")[0].value);
+	var speed = parseInt($(command).children(".speed-value")[0].value);
+	var rotations = parseFloat($(command).children(".rotation-value")[0].value);
+	var values = {
+	  motorId: motorId,
+	  speed: speed,
+	  rotations: rotations
+	};
+	if (validateValues("motor-rotations", values)) {
+	  addMotorRotation(motorId, rotations, speed);
+	}
+	else
+	{
+	  BuildSuccess = false;
+	}
       break;
 
       case "move-servo":
-        var motorId = parseInt($(command).children(".motor-id")[0].value);
-        var position = parseInt($(command).children(".position-value")[0].value);
-        var values = {
-          motorId: motorId,
-          position: position
-        };
-        if (validateValues("move-servo", values)) {
-          addMoveServo(motorId, position);
-        }
-        else
-        {
-          BuildSuccess = false;
-        }
+	var motorId = parseInt($(command).children(".motor-id")[0].value);
+	var position = parseInt($(command).children(".position-value")[0].value);
+	var values = {
+	  motorId: motorId,
+	  position: position
+	};
+	if (validateValues("move-servo", values)) {
+	  addMoveServo(motorId, position);
+	}
+	else
+	{
+	  BuildSuccess = false;
+	}
       break;
 	
 	case "stop-all-motors":
 		var str = "";
-		str += "Servos_StopAll();\n"
-		str += "Motors_StopAllMotors();\n"
+		str += "Servos_StopAll();\n";
+		str += "Motors_StopAllMotors();\n";
 		programString += str;
 		break;
       default:
@@ -342,24 +342,25 @@ function programDragOver(e)
 }
 
 function addDrop(e) {
-  $(this).removeClass("selected");
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-
-  if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
-  {
-    var NewNode = dragSrcEl.cloneNode(true);
-    var Parent = document.getElementById("workbench");
-    Parent.insertBefore(NewNode, document.getElementById("add"));
-
-    NewNode.addEventListener('dragstart', programDragStart, false);
-    NewNode.addEventListener('dragover', programDragOver, false);
-    NewNode.addEventListener('drop', programDrop, false);
-    NewNode.addEventListener('dragleave', programDragLeave, false);
-  }
-
-  return false;
+	$(this).removeClass("selected");
+	
+	if (e.stopPropagation) {
+		e.stopPropagation();
+	}
+	
+	if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
+	{
+		var NewNode = dragSrcEl.cloneNode(true);
+		var Parent = document.getElementById("workbench");
+		Parent.insertBefore(NewNode, document.getElementById("add"));
+		
+		NewNode.addEventListener('dragstart', programDragStart, false);
+		NewNode.addEventListener('dragover', programDragOver, false);
+		NewNode.addEventListener('drop', programDrop, false);
+		NewNode.addEventListener('dragleave', programDragLeave, false);
+	}
+	
+	return false;
 }
 
 function addDragOver(e) {
@@ -390,7 +391,7 @@ $("document").ready(function()
     console.log(e);
       if ((e.keyCode == "8" || e.keyCode == "46") && (e.target.nodeName != "INPUT"))
       {
-        hoveredE.remove();
+	hoveredE.remove();
       }
     });
   });
@@ -424,4 +425,5 @@ $("document").ready(function()
 	}
 	
 	introJs().start();
+
 });

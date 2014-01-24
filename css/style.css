@@ -28,6 +28,8 @@
   text-align: center;
   margin-right: 5px;
   margin-bottom: 5px;
+  margin-top: 5px;
+  margin-left: 5px;
   cursor: move;
   float: left;
 }
@@ -41,11 +43,13 @@
   background-color: #ccc;
   border-radius: 10px;
   text-align: center;
+  margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
+  margin-top: 5px;
   cursor: move;
   display: inline-block;
-  /*float: left;*/
+  float: left;
 }
 
 .command input {
@@ -158,4 +162,8 @@
   /*border-radius: 6px;*/
   margin-top: 5px;
   padding: 5px;
+}
+
+#workbench .command {
+	padding-bottom: -50px;
 }
