@@ -48,7 +48,7 @@ $("#robotc-download").click(function()
   window.location = "http://www.robotc.net/files/ROBOTCforMINDSTORMS_362.exe";
 });
 
-function getMotorValues(id) {
+function getMotorValues(id, callingContext) {
 	for (var i=0; i<motors.length;i++) {
 		if (motors[i].motorId === id) {
 			if (isNaN(motors[i].port) ||
@@ -58,32 +58,38 @@ function getMotorValues(id) {
 			{
 				alert("Motor " + id + " is used, but is not configured correctly!");
 				return null;
-			} 
+			}
+			if (motors[i].hasEncoder && callingContext = "motorRotations")
+			{
+				alert("Motor " + id + " was told to move based on rotations, but it has no encoder!");
+				return null;
+			}
+			
 			return motors[i];
 		}
 	}
 }
 
-function addSleep(time) 
+function addSleep(time)
 {
   programString += "Sleep("+time*1000+");\n";
 }
 
-function addMotorSpeed(motorId, speed) 
+function addMotorSpeed(motorId, speed)
 {
-  var motor = getMotorValues(motorId);
+  var motor = getMotorValues(motorId, "motorSpeed");
   programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
 }
 
 function addMotorRotation(motorId, rotations, speed) 
 {
-  var motor = getMotorValues(motorId);
+  var motor = getMotorValues(motorId, "motorRotations",);
   programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");\n";
 }
 
 function addMoveServo(motorId, position) 
 {
-  var motor = getMotorValues(motorId);
+  var motor = getMotorValues(motorId, "moveServo");
   programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");\n";
 }
 
