@@ -72,25 +72,25 @@ function getMotorValues(id, callingContext) {
 
 function addSleep(time)
 {
-  programString += "Sleep("+time*1000+");\n";
+	programString += "Sleep("+time*1000+");\n";
 }
 
 function addMotorSpeed(motorId, speed)
 {
-  var motor = getMotorValues(motorId, "motorSpeed");
-  programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
+	var motor = getMotorValues(motorId, "motorSpeed");
+	programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
 }
 
 function addMotorRotation(motorId, rotations, speed) 
 {
-  var motor = getMotorValues(motorId, "motorRotations",);
-  programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");\n";
+	var motor = getMotorValues(motorId, "motorRotations",);
+	programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");\n";
 }
 
 function addMoveServo(motorId, position) 
 {
-  var motor = getMotorValues(motorId, "moveServo");
-  programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");\n";
+	var motor = getMotorValues(motorId, "moveServo");
+	programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");\n";
 }
 
 function validateValues(blockname, values) 
