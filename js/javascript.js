@@ -78,7 +78,14 @@ function addSleep(time)
 function addMotorSpeed(motorId, speed)
 {
 	var motor = getMotorValues(motorId, "motorSpeed");
-	programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
+	if (motor.hasEncoder)
+	{
+		programString += "Motors_SetSpeed(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+speed+");\n";
+	}
+	else
+	{
+		programString += "motor[mtr_S" + motor.port + "_C" + motor.daisy + "_" + motor.number + "] = " + speed + ";";
+	}	
 }
 
 function addMotorRotation(motorId, rotations, speed) 
@@ -91,6 +98,8 @@ function addMoveServo(motorId, position)
 {
 	var motor = getMotorValues(motorId, "moveServo");
 	programString += "Servos_SetPosition(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+position+");\n";
+	// FIXME: this needs to account for controllers that are using RobotC functions instead of I2C.
+	// This probably depends on issue #27.
 }
 
 function validateValues(blockname, values) 
