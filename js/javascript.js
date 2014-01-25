@@ -51,9 +51,10 @@ $("#robotc-download").click(function()
 function getMotorValues(id) {
 	for (var i=0; i<motors.length;i++) {
 		if (motors[i].motorId === id) {
-			if (isNaN(motors[i].port)
-			    || isNaN(motors[i].daisy)
-			    || isNaN(motors[i].number))
+			if (isNaN(motors[i].port) ||
+			    isNaN(motors[i].daisy) ||
+			    isNaN(motors[i].number) ||
+			    motors[i].hasEncoder == null))
 			{
 				alert("Motor " + id + " is used, but is not configured correctly!");
 				return null;
