@@ -5,8 +5,6 @@ var programheader;
 
 var library_base_url = "libraries/";
 
-var pragmaConfig = "#pragma config(Sensor, S1,     ,               sensorI2CCustom)\n#pragma config(Sensor, S2,     ,               sensorI2CCustom)\n#pragma config(Sensor, S3,     ,               sensorI2CCustom)\n#pragma config(Sensor, S4,     ,               sensorI2CCustom)\n";
-
 function requestLibrary(name)
 {
 	console.log("requesting " + name);
@@ -34,7 +32,7 @@ function recieveLibrary(name)
 		console.log("loaded all libraries");
 		
 		// instantiate the data into JavaScript
-		programheader = pragmaConfig + libraryText["drivers/common"] + libraryText["I2C"] + libraryText["Motors"] + libraryText["Servos"];
+		programheader = libraryText["drivers/common"] + libraryText["I2C"] + libraryText["Motors"] + libraryText["Servos"];
 		
 		// get rid of the infobar and enable the app
 		$("#loadingAlert").remove();

@@ -54,20 +54,90 @@ function getMotorValues(id, callingContext) {
 			if (isNaN(motors[i].port) ||
 			    isNaN(motors[i].daisy) ||
 			    isNaN(motors[i].number) ||
-			    motors[i].hasEncoder == null))
+			    motors[i].hasEncoder == null)
 			{
 				alert("Motor " + id + " is used, but is not configured correctly!");
 				return null;
 			}
-			if (motors[i].hasEncoder && callingContext = "motorRotations")
+			if (motors[i].hasEncoder && callingContext == "motorRotations")
 			{
-				alert("Motor " + id + " was told to move based on rotations, but it has no encoder!");
+				alert("Motor " + id + " was told to move based on rotations, but encoders are not available! This either means that this motor doesn't have an encoder or another motor on the same port doesn't have an encoder.");
 				return null;
 			}
 			
 			return motors[i];
 		}
 	}
+}
+
+function getControllerEncoderStatus(port)
+{
+	var hasEncoders = true;
+	$(".motor-id-block").each(function(index, e) {
+		if ($(this).find(".encoder-checkbox").checked == "false")
+		{
+			// there's a motor without encoders
+			hasEncoders = false;
+		}
+	});
+	
+	return hasEncoders;
+}
+
+function getControllerIsMotors(port, controller)
+{
+	// TODO: right now this assumes that every controller in a RobotC-controlled chain is a motor controller.
+	// For I2C, this doesn't matter.
+	return true;
+}
+	
+function getPragmaConfig()
+{
+	var pragmaConfig = "";
+	
+	for (var i = 1; i <= 4; i++)
+	{
+		if (getControllerEncoderStatus(i) == true)
+		{
+			// insert I2C stuff
+			pragmaConfig += "#pragma config(Sensor, S" + i + ",     ,               sensorI2CCustom)\n";
+		}
+		else
+		{
+			// generate the overly verbose crap that RobotC needs
+			pragmaConfig += "#pragma config(Hubs,  S" + i;
+			var headerText = "";
+			var bodyText = "";
+			
+			for (var controller = 1; controller <= 4; controller++)
+			{
+				if (getControllerIsMotors(controller))
+				{
+					// controller is a motor controller
+					headerText = ", HTMotor";
+					for (var motor = 1; motor <= 2; motor++)
+					{
+						 bodyText += "#pragma config(Motor,  mtr_S" + i + "_C" + controller + "_" + motor + ",      ,             tmotorTetrix, openLoop)\n";
+					}
+				}
+				else
+				{
+					// controller is a servo controller
+					headerText += ", HTServo"
+					for (var servo = 1; servo <= 6; servo++)
+					{
+						bodyText += "#pragma config(Servo,  srvo_S" + i + "_C" + controller + "_" + servo + ",    servo1,               tServoNone)";
+
+					}
+				}
+			}
+
+			pragmaConfig += headerText + ")\n";
+			pragmaConfig += "#pragma config(Sensor, S" + i + ",     ,               sensorI2CMuxController)"
+		}
+	}
+
+	return pragmaConfig;
 }
 
 function addSleep(time)
@@ -90,7 +160,7 @@ function addMotorSpeed(motorId, speed)
 
 function addMotorRotation(motorId, rotations, speed) 
 {
-	var motor = getMotorValues(motorId, "motorRotations",);
+	var motor = getMotorValues(motorId, "motorRotations");
 	programString += "Motors_MoveRotations(S"+motor.port+", "+motor.daisy+", "+motor.number+", "+rotations+", "+speed+");\n";
 }
 
@@ -148,7 +218,8 @@ function validateValues(blockname, values)
 }
 
 function parseProgram() {
-  programString = programheader;
+  programString = getPragmaConfig();
+  programString += programheader;
   programString += "task main()\n{\n";
   
   var BuildSuccess = true;
