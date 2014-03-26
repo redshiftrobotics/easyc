@@ -72,13 +72,15 @@ function getMotorValues(id, callingContext) {
 
 function getControllerEncoderStatus(port)
 {
-	var hasEncoders = true;
+	var hasEncoders = false;
 	$(".motor-id-block").each(function(index, e) {
-		if ($(this).find(".encoder-checkbox").checked == "false")
+		if ($(this).find(".encoder-checkbox").prop("checked") == "true")
 		{
+			console.log("found motor without encoders on port " + port);
 			// there's a motor without encoders
-			hasEncoders = false;
+			hasEncoders = true;
 		}
+
 	});
 	
 	return hasEncoders;
