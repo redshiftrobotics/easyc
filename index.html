@@ -3,7 +3,7 @@
 	<head>
 		<title>EasyC | SAAS Robotics </title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/introjs.min.css">
+		<link rel="stylesheet" type="text/css" href="bower_components/intro.js/minified/introjs.min.css">
 		<link rel="stylesheet" type="text/css" href="css/overrides.css">
 
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -22,8 +22,9 @@
 		<div class="content">
 			<div data-step="1" data-position="bottom" data-intro="Welcome to EasyC! You can use EasyC to create an autonomous program for your robot, even if you don't know how to use RobotC.<br /><br />Your first step is to input information about the motors and servos on your robot. For example, if you have a motor controller directly attached to port 1 on the NXT, and a motor wired to motor 2, you would put 1 in the port field, 1 in the daisychain field, and 2 in the motor field." id="motor-config" class="config-bar">
 				<h2 class="title">Motor/Servo Config:</h2>
-				<div class="command" id="motor-id-1">
+				<div class="command motor-id-block" id="motor-id-1">
 					<div class="title">ID: 1</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoder1" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -31,8 +32,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number" placeholder="motor number"/>
 				</div>
-				<div class="command" id="motor-id-2">
+				<div class="command motor-id-block" id="motor-id-2">
 					<div class="title">ID: 2</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoder2" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -40,8 +42,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number"  placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-3">
+				<div class="command motor-id-block" id="motor-id-3">
 					<div class="title">ID: 3</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoder3" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -49,8 +52,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number" placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-4">
+				<div class="command motor-id-block" id="motor-id-4">
 					<div class="title">ID: 4</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoders4" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -58,8 +62,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number" placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-5">
+				<div class="command motor-id-block" id="motor-id-5">
 					<div class="title">ID: 5</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoders5" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -67,8 +72,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number"  placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-6">
+				<div class="command motor-id-block" id="motor-id-6">
 					<div class="title">ID: 6</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoders6" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -76,8 +82,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number" placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-7">
+				<div class="command motor-id-block" id="motor-id-7">
 					<div class="title">ID: 7</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoders7" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -85,8 +92,9 @@
 					<div class="input-text">Motor Number: </div>
 					<input class="motor-number"  placeholder="Motor #"/>
 				</div>
-				<div class="command" id="motor-id-8">
+				<div class="command motor-id-block" id="motor-id-8">
 					<div class="title">ID: 8</div>
+					<label class="input-text">Motor has encoders: <input class="encoder-checkbox" type="checkbox" value="hasEncoders8" /></label>
 					<div class="input-text">Port: </div>
 					<input class="motor-port" placeholder="Port #"/>
 					<div class="input-text">Daisychain: </div>
@@ -96,7 +104,7 @@
 				</div>
 			</div>
 			<div class="panel-left">
-				<div data-step="3" data-intro="The toolbox holds command blocks. Drag blocks out of the toolbox to make a copy to put in your workbench. You can also drag a block to the recycle bin to remove it." id="toolbox" class="toolbox">
+				<Div data-step="3" data-intro="The toolbox holds command blocks. Drag blocks out of the toolbox to make a copy to put in your workbench. You can also drag a block to the recycle bin to remove it." id="toolbox" class="toolbox">
 					<h2>Tools: (Drag from Here)</h2>
 					<div class="command draggable" draggable="true" command-type="sleep">
 						<div class="title">Sleep</div>
@@ -145,8 +153,8 @@
 				<img hidden = "true" src="images/EasyCConfig.svg"/>
 			</div>
 		</div>
-		<script src="js/jquery.js"></script>
-		<script src="js/intro.min.js"></script>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/intro.js/minified/intro.min.js"></script>
 
 		<script type="text/javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" src="js/javascript.js"></script>
