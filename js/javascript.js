@@ -363,7 +363,9 @@ function addDrop(e) {
 	return false;
 }
 
-function addDragOver(e) {
+function addDragOver(e) 
+{
+  console.log("Start Item Drag");
   if(dragSrcEl.parentNode.getAttribute('id') == "toolbox")
   {
     $(this).addClass("selected");
